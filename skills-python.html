@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Skills — Beka Razmadze</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .header-accent {
+            position: absolute;
+            top: 0; right: 0;
+            width: 600px; height: 150px;
+            background: linear-gradient(135deg, #7c8ba0 0%, #a0956b 25%, #3d4f65 50%, #1e2d47 100%);
+            clip-path: polygon(100% 0, 100% 60%, 50% 100%, 0 30%, 0 0);
+            z-index: 0;
+        }
+
+        /* ── LEFT SIDEBAR ── */
+        .left-sidebar {
+            width: 35%;
+            background-color: #f8f9fa;
+            padding: 60px 40px;
+            border-right: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .section { margin-bottom: 35px; }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #9b8b6d;
+            padding-bottom: 8px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #9b8b6d;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            transition: color .2s;
+        }
+        .back-link:hover { color: #2c3e50; }
+
+        .project-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #2c3e50;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            padding: 5px 11px;
+            background-color: #e9ecef;
+            color: #2c3e50;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 3px 3px 3px 0;
+            letter-spacing: .4px;
+        }
+        .tech-tag.highlight {
+            background-color: #9b8b6d;
+            color: #fff;
+            border-color: #9b8b6d;
+        }
+
+        .module-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: background .2s;
+            border-left: 3px solid transparent;
+        }
+        .module-item:hover {
+            background: #fff;
+            border-left-color: #9b8b6d;
+        }
+        .module-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+        .module-info { flex: 1; }
+        .module-name { font-size: 12px; font-weight: 700; color: #2c3e50; margin-bottom: 2px; }
+        .module-desc { font-size: 11px; color: #888; line-height: 1.4; }
+
+        .metric-row { display: flex; gap: 12px; margin-bottom: 12px; }
+        .metric-box {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+        .metric-num { font-size: 22px; font-weight: 700; color: #2c3e50; display: block; }
+        .metric-label { font-size: 10px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+        /* ── RIGHT CONTENT ── */
+        .right-content {
+            width: 65%;
+            padding: 60px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-section { margin-bottom: 40px; position: relative; z-index: 2; }
+
+        .page-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8b6d;
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 40px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .job-title { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 18px; }
+
+        .accent-line { width: 80px; height: 4px; background-color: #9b8b6d; margin-bottom: 22px; }
+
+        .profile-text {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 35px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 25px;
+        }
+
+        .work-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ── ARCHITECTURE ── */
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .arch-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 8px 12px;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: .4px;
+            text-align: center;
+            min-width: 68px;
+        }
+        .arch-node span { font-size: 15px; }
+        .arch-node.primary { background: #2c3e50; color: #fff; border-color: #2c3e50; }
+        .arch-node.accent  { background: #9b8b6d; color: #fff; border-color: #9b8b6d; }
+        .arch-arrow { color: #9b8b6d; font-size: 16px; font-weight: bold; }
+
+        /* ── MODULE SECTIONS ── */
+        .module-section {
+            margin-bottom: 32px;
+            position: relative;
+            padding-left: 25px;
+        }
+        .module-section::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px;
+            width: 10px; height: 10px;
+            background-color: #9b8b6d;
+            border-radius: 50%;
+        }
+        .module-section::after {
+            content: '';
+            position: absolute;
+            left: 4px; top: 18px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background-color: #e9ecef;
+        }
+        .module-section:last-child::after { display: none; }
+
+        .module-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .module-title { font-weight: 700; color: #2c3e50; font-size: 14px; }
+        .module-filename {
+            font-size: 11px;
+            color: #9b8b6d;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #f8f9fa;
+            padding: 2px 7px;
+            border-radius: 3px;
+            border: 1px solid #e9ecef;
+        }
+        .module-role { font-size: 11px; color: #888; font-style: italic; }
+
+        .module-description { font-size: 12px; color: #555; line-height: 1.7; margin-bottom: 10px; }
+
+        .feature-list { list-style: none; padding: 0; margin-bottom: 12px; }
+        .feature-list li {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .feature-list li::before { content: '▸'; margin-right: 8px; color: #9b8b6d; }
+
+        .code-block {
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .code-header {
+            background: #2c3e50;
+            color: #9b8b6d;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .code-header span { color: #aaa; font-weight: 400; font-style: italic; }
+        pre { margin: 0; }
+        pre code.hljs { font-size: 11.5px; padding: 14px; line-height: 1.55; }
+
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .left-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e9ecef; padding: 40px; }
+            .right-content { width: 100%; padding: 40px; }
+            .header-accent { width: 100%; height: 100px; clip-path: polygon(100% 0, 100% 40%, 50% 100%, 0 20%, 0 0); }
+        }
+        @media (max-width: 768px) {
+            .name { font-size: 28px; }
+            .left-sidebar, .right-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="header-accent"></div>
+<div class="container">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="left-sidebar">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+        <div class="section">
+            <div class="project-badge">Python Project</div>
+            <div class="section-title">Project Stats</div>
+            <div class="metric-row">
+                <div class="metric-box"><span class="metric-num">9</span><div class="metric-label">Modules</div></div>
+                <div class="metric-box"><span class="metric-num">3</span><div class="metric-label">DB Types</div></div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-box"><span class="metric-num">15m</span><div class="metric-label">Retry Interval</div></div>
+                <div class="metric-box"><span class="metric-num">30</span><div class="metric-label">Parallel Jobs</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Tech Stack</div>
+            <span class="tech-tag highlight">Python</span>
+            <span class="tech-tag highlight">APScheduler</span>
+            <span class="tech-tag highlight">SQLAlchemy</span>
+            <span class="tech-tag highlight">win32com</span>
+            <span class="tech-tag highlight">slack_sdk</span>
+            <span class="tech-tag">pandas</span>
+            <span class="tech-tag">matplotlib</span>
+            <span class="tech-tag">msal</span>
+            <span class="tech-tag">pytz</span>
+            <span class="tech-tag">ipywidgets</span>
+            <span class="tech-tag">Pillow</span>
+            <span class="tech-tag">pyodbc</span>
+            <span class="tech-tag">psycopg2</span>
+            <span class="tech-tag">pymysql</span>
+            <span class="tech-tag">openpyxl</span>
+            <span class="tech-tag">threading</span>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Modules</div>
+            <div class="module-item"><div class="module-icon">🔌</div><div class="module-info"><div class="module-name">sharepoint_client.py</div><div class="module-desc">Dual-mode file client (Local / Graph API)</div></div></div>
+            <div class="module-item"><div class="module-icon">⚙️</div><div class="module-info"><div class="module-name">config_loader.py</div><div class="module-desc">Excel config parser with scheduling logic</div></div></div>
+            <div class="module-item"><div class="module-icon">🚀</div><div class="module-info"><div class="module-name">main.py</div><div class="module-desc">Core orchestrator — SQL, Excel, Outlook</div></div></div>
+            <div class="module-item"><div class="module-icon">📋</div><div class="module-info"><div class="module-name">sent_log.py</div><div class="module-desc">Thread-safe JSON delivery log</div></div></div>
+            <div class="module-item"><div class="module-icon">▶️</div><div class="module-info"><div class="module-name">startup.py</div><div class="module-desc">Scheduler bootstrap & hot-reload</div></div></div>
+            <div class="module-item"><div class="module-icon">📊</div><div class="module-info"><div class="module-name">slack_notifier.py</div><div class="module-desc">PNG status dashboard → Slack</div></div></div>
+            <div class="module-item"><div class="module-icon">🔄</div><div class="module-info"><div class="module-name">auto_refresh.py</div><div class="module-desc">Live config sync with change detection</div></div></div>
+            <div class="module-item"><div class="module-icon">🛡️</div><div class="module-info"><div class="module-name">thread_guard.py</div><div class="module-desc">Duplicate thread prevention</div></div></div>
+            <div class="module-item"><div class="module-icon">🖥️</div><div class="module-info"><div class="module-name">jupyter_widget.py</div><div class="module-desc">ipywidgets manual send UI</div></div></div>
+        </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content">
+
+        <div class="header-section">
+            <div class="page-label">Python Project</div>
+            <div class="name">Report Automation System</div>
+            <div class="job-title">AUTOMATED REPORT SCHEDULING & DELIVERY ENGINE</div>
+            <div class="accent-line"></div>
+        </div>
+
+        <div class="profile-text">
+            A production-grade Python system that automates the full lifecycle of business reports: reading configuration from SharePoint Excel files, running SQL readiness checks across multiple databases (MSSQL, Greenplum, StarRocks), refreshing Excel workbooks via COM automation, and delivering them by email through Outlook with a formatted data table pasted inline. A real-time Slack dashboard renders per-report delivery status as a PNG image. Built and deployed at Space International — the fintech behind TBC Bank Uzbekistan.
+        </div>
+
+<!-- Problem & Solution -->
+        <div style="margin-bottom: 35px;">
+            <div class="work-title">THE PROBLEM I SOLVED</div>
+            <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+                <div style="flex:1; min-width:220px;">
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; padding:16px 18px; border-radius:0 6px 6px 0; margin-bottom:12px;">
+                        <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#9b8b6d; margin-bottom:8px;">Before</div>
+                        <div style="font-size:12px; color:#555; line-height:1.8;">Every day, someone had to manually open each Excel report, wait for it to refresh from the database, copy the table, paste it into an Outlook email, and send it to the right people — repeated for every report, every day.</div>
+                    </div>
+                    <div style="background:#f8f9fa; border-left:4px solid #2c3e50; padding:16px 18px; border-radius:0 6px 6px 0;">
+                        <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#2c3e50; margin-bottom:8px;">After</div>
+                        <div style="font-size:12px; color:#555; line-height:1.8;">A Python system runs unattended on a server — checking data readiness, refreshing Excel, composing and sending emails automatically at scheduled times. The team manages everything by editing a single Excel config file. No code changes needed to add or reschedule a report.</div>
+                    </div>
+                </div>
+                <div style="flex-shrink:0; width:260px;">
+                    <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#2c3e50; margin-bottom:8px;">Live Slack Dashboard</div>
+                    <img src="Slack_Photo.png" alt="Slack status dashboard generated by the system" style="width:100%; border-radius:6px; box-shadow:0 2px 12px rgba(0,0,0,0.12); border:1px solid #e9ecef;">
+                    <div style="font-size:11px; color:#888; margin-top:6px; font-style:italic;">Auto-generated PNG posted to Slack — updates every 5 minutes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div style="margin-bottom: 35px;">
+            <div class="work-title">SYSTEM ARCHITECTURE</div>
+            <div class="arch-flow">
+                <div class="arch-node primary"><span>📁</span>SharePoint<br>/ Local</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>⚙️</span>Config<br>Loader</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🕐</span>APScheduler<br>Cron</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🗄️</span>SQL<br>Checks</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>📊</span>Excel<br>Refresh</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node accent"><span>📧</span>Outlook<br>Send</div>
+            </div>
+            <div class="arch-flow">
+                <div class="arch-node"><span>📋</span>Sent<br>Log</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>📈</span>Matplotlib<br>PNG</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node accent"><span>💬</span>Slack<br>Dashboard</div>
+                <div style="flex:1"></div>
+                <div class="arch-node"><span>🔄</span>Auto-Refresh<br>every 5 min</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🔁</span>Config<br>Hot-Reload</div>
+            </div>
+        </div>
+
+        <!-- Module docs -->
+        <div style="margin-bottom: 10px;">
+            <div class="work-title">MODULE DOCUMENTATION</div>
+        </div>
+
+        <!-- 1 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">SharePoint Client</div>
+                <div class="module-filename">sharepoint_client.py</div>
+                <div class="module-role">File Access Layer</div>
+            </div>
+            <div class="module-description">Provides a unified interface for reading files from either a local OneDrive-synced folder (testing) or Microsoft SharePoint Online via the Graph API (production). A factory function picks the right implementation from a JSON config flag — all downstream code stays identical in both modes.</div>
+            <ul class="feature-list">
+                <li>OAuth2 token acquisition via <strong>MSAL</strong> with automatic refresh on 401 responses</li>
+                <li>Methods: <code>download_bytes</code>, <code>download_text</code>, <code>download_to_file</code>, <code>download_excel</code></li>
+                <li>LocalClient maps SharePoint-style paths to local filesystem paths for zero-config testing</li>
+                <li>Lazy site ID and drive ID resolution with caching to minimise redundant API calls</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">sharepoint_client.py <span>— factory pattern</span></div>
+                <pre><code class="language-python">def build_client(config: dict):
+    if config.get("local_mode", False):
+        return LocalClient.from_config(config)      # reads from synced OneDrive folder
+    else:
+        return SharePointClient.from_config(config) # Microsoft Graph API
+
+class SharePointClient:
+    def _acquire_token(self) -> str:
+        app = msal.ConfidentialClientApplication(
+            self.client_id,
+            authority=f"https://login.microsoftonline.com/{self.tenant_id}",
+            client_credential=self.client_secret,
+        )
+        result = app.acquire_token_for_client(
+            scopes=["https://graph.microsoft.com/.default"]
+        )
+        return result["access_token"]</code></pre>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Config Loader</div>
+                <div class="module-filename">config_loader.py</div>
+                <div class="module-role">Configuration & Scheduling Logic</div>
+            </div>
+            <div class="module-description">Reads a master Excel workbook with three sheets — Reports, SQLChecks, Servers — and hydrates typed dataclasses. Thread-safe with a 60-second TTL cache so the live scheduler can hot-reload config without restarting.</div>
+            <ul class="feature-list">
+                <li>Flexible <code>send_days</code> parser supports: <code>*</code>, <code>Mon-Fri</code>, <code>Mon,Wed,Fri</code>, and single-day formats</li>
+                <li><code>should_send_today()</code> called by the scheduler before each job to skip off-schedule days</li>
+                <li>SQL file encoding auto-detection: tries utf-8-sig → utf-8 → cp1252 → latin-1 → utf-16</li>
+                <li>Supports three server types: <strong>MSSQL</strong>, <strong>Greenplum</strong>, <strong>StarRocks</strong></li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">config_loader.py <span>— send_days parser</span></div>
+                <pre><code class="language-python">def _parse_send_days(raw: str) -> tuple[bool, dict]:
+    if not val or val == "*":
+        return True, {d: True for d in WEEKDAYS}       # every day
+
+    if "-" in val and "," not in val:                   # range: Mon-Fri
+        start  = WEEKDAYS.index(parts[0].capitalize()[:3])
+        end    = WEEKDAYS.index(parts[1].capitalize()[:3])
+        active = {d: (start <= i <= end) for i, d in enumerate(WEEKDAYS)}
+        return False, active
+
+    if "," in val:                                      # list: Mon,Wed,Fri
+        days_on = {d.strip().capitalize()[:3] for d in val.split(",")}
+        return False, {d: (d in days_on) for d in WEEKDAYS}</code></pre>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Main Orchestrator</div>
+                <div class="module-filename">main.py</div>
+                <div class="module-role">Core Engine</div>
+            </div>
+            <div class="module-description">The heart of the system. Handles SQL readiness checks across multiple databases, Excel COM automation (refresh + visible range detection + clipboard copy), Outlook COM email composition with an inline formatted table, and a retry loop with hard deadline enforcement.</div>
+            <ul class="feature-list">
+                <li>Excel refresh via <strong>win32com</strong> with a watchdog timer that force-kills Excel if it hangs past the timeout</li>
+                <li><code>detect_visible_used_range()</code> skips hidden rows/columns and handles merged cells correctly</li>
+                <li>Runtime credential patching for OLEDB/ODBC connections — no passwords stored in Excel</li>
+                <li>Retry every 15 minutes until 23:45, then marks as FAILED. Cancels if report is deactivated mid-retry</li>
+                <li>30 concurrent jobs via APScheduler <code>ThreadPoolExecutor</code> with <code>coalesce=True</code></li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">main.py <span>— Excel watchdog + retry loop</span></div>
+                <pre><code class="language-python"># Watchdog: force-kill Excel if refresh hangs
+def _timeout_kill():
+    subprocess.call(["taskkill", "/f", "/im", "excel.exe"])
+
+kill_timer = threading.Timer(REFRESH_TIMEOUT_SEC, _timeout_kill)
+kill_timer.daemon = True
+kill_timer.start()
+try:
+    wb.RefreshAll()
+finally:
+    kill_timer.cancel()
+
+# Retry loop with hard deadline
+while True:
+    try:
+        send_one_report(report, excel_path)
+        update_sent_log(report_id, "OK")
+        return
+    except Exception as e:
+        if _now_local() + timedelta(minutes=15) > send_deadline:
+            update_sent_log(report_id, "FAILED")
+            return
+        time.sleep(RETRY_EVERY_MINUTES * 60)</code></pre>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Sent Log</div>
+                <div class="module-filename">sent_log.py</div>
+                <div class="module-role">Delivery Tracking</div>
+            </div>
+            <div class="module-description">Thread-safe JSON persistence layer tracking delivery status of every report. On startup, auto-cleans entries older than 10 days. Used by the scheduler to prevent duplicate sends and by Slack notifier to render per-report status.</div>
+            <ul class="feature-list">
+                <li>Shared <code>threading.Lock</code> prevents write conflicts across 30 concurrent scheduler threads</li>
+                <li>Each entry stores: <code>time</code>, <code>status</code> (OK / LATE / FAILED), <code>date</code></li>
+                <li>Auto-pruning on load removes entries older than 10 days to keep the file compact</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">sent_log.py <span>— thread-safe write</span></div>
+                <pre><code class="language-python">def update_sent_log(report_id: str, status: str):
+    with _sent_log_lock:          # blocks all other threads while writing
+        sent_log[report_id] = {
+            "time":   datetime.now().strftime("%H:%M"),
+            "status": status,     # "OK" | "LATE" | "FAILED"
+            "date":   datetime.now().strftime("%Y-%m-%d"),
+        }
+        save_sent_log()           # persist to disk immediately</code></pre>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Scheduler Bootstrap</div>
+                <div class="module-filename">startup.py</div>
+                <div class="module-role">Entry Point</div>
+            </div>
+            <div class="module-description">Safely initialises and restarts the APScheduler instance inside a Jupyter environment. Shuts down any existing running scheduler before starting fresh, preventing duplicate job registration on notebook kernel re-runs.</div>
+            <div class="code-block">
+                <div class="code-header">startup.py <span>— safe scheduler restart</span></div>
+                <pre><code class="language-python">try:
+    if 'scheduler' in globals() and scheduler.running:
+        scheduler.shutdown(wait=False)
+        print("⏹️ Old scheduler stopped")
+except Exception as e:
+    print(f"⚠️ Could not stop old scheduler: {e}")
+
+scheduler = build_scheduler(config_loader, full_config)
+scheduler.start()
+print("Scheduler started.")</code></pre>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Slack Notifier</div>
+                <div class="module-filename">slack_notifier.py</div>
+                <div class="module-role">Monitoring Dashboard</div>
+            </div>
+            <div class="module-description">Renders a real-time status table as a PNG using <strong>matplotlib</strong> and posts it to a Slack channel. Each update deletes the previous message and posts a fresh image — giving the team a single always-current status card pinned in the channel.</div>
+            <ul class="feature-list">
+                <li>Per-cell colour coding: ✅ OK (green), ⚠️ LATE (amber with delay: <em>+12m</em>), ❌ FAILED (red), ⏳ PENDING (grey)</li>
+                <li>Slack upload via <code>files_getUploadURLExternal</code> + <code>files_completeUploadExternal</code> (new Slack API)</li>
+                <li>Pillow whitespace crop post-processing for clean image boundaries</li>
+                <li>Persists last message <code>ts</code> to disk for delete-before-repost across restarts</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">slack_notifier.py <span>— status colour logic</span></div>
+                <pre><code class="language-python">if "FAILED" in status:
+    txt.set_color("#991b1b")       # dark red
+    txt.set_fontweight("bold")
+elif "LATE" in status:
+    delay = _calc_delay(r.send_time, log_entry.get("time", ""))
+    status_col = f"⚠️  LATE{delay}"   # e.g. "⚠️  LATE +12m"
+    txt.set_color("#92400e")       # amber
+elif "OK" in status:
+    txt.set_color("#15803d")       # green
+else:
+    txt.set_color("#94a3b8")       # grey — pending / paused</code></pre>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Auto Refresh</div>
+                <div class="module-filename">auto_refresh.py</div>
+                <div class="module-role">Config Hot-Reload</div>
+            </div>
+            <div class="module-description">Runs as a background daemon thread, reloading report configuration every 5 minutes and syncing changes to the live scheduler without any restart. Detects and logs additions, removals, reschedules, and activate/deactivate events to the Slack log channel.</div>
+            <ul class="feature-list">
+                <li>Snapshots config before and after refresh to diff changes with precision</li>
+                <li>Calls <code>sync_scheduler()</code> to add or reschedule only changed jobs</li>
+                <li>Posts change summary to Slack log channel and refreshes the status dashboard PNG</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">auto_refresh.py <span>— change detection</span></div>
+                <pre><code class="language-python">before = {rid: {"send_time": r.send_time, "active": r.active}
+          for rid, r in config_loader.get_all_reports().items()}
+
+config_loader.refresh()
+sync_scheduler(scheduler, config_loader)
+
+for rid, r in config_loader.get_all_reports().items():
+    if rid not in before:
+        changes.append(f"➕ New report: `{rid}` @ {r.send_time}")
+    elif before[rid]["send_time"] != r.send_time:
+        changes.append(f"🕐 `{rid}` rescheduled: {before[rid]['send_time']} → {r.send_time}")
+    elif before[rid]["active"] != r.active:
+        flag = "activated ✅" if r.active else "deactivated ❌"
+        changes.append(f"🔄 `{rid}` {flag}")</code></pre>
+            </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Thread Guard</div>
+                <div class="module-filename">thread_guard.py</div>
+                <div class="module-role">Safety Utility</div>
+            </div>
+            <div class="module-description">Prevents starting a second auto-refresh thread when a Jupyter notebook cell is re-run. Checks whether the existing thread is still alive before creating a new daemon thread — a simple but essential guard in a long-running notebook.</div>
+            <div class="code-block">
+                <div class="code-header">thread_guard.py <span>— duplicate thread prevention</span></div>
+                <pre><code class="language-python">if 'refresh_thread' not in globals() or not refresh_thread.is_alive():
+    refresh_thread = threading.Thread(
+        target=auto_refresh_scheduler,
+        args=(scheduler, config_loader, full_config, 5),
+        daemon=True     # dies automatically when the notebook shuts down
+    )
+    refresh_thread.start()
+    print("✅ Auto-refresh started — updates every 5 minutes")
+else:
+    print("⚠️ Auto-refresh already running — skipped")</code></pre>
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Jupyter Widget</div>
+                <div class="module-filename">jupyter_widget.py</div>
+                <div class="module-role">Manual Send UI</div>
+            </div>
+            <div class="module-description">An <strong>ipywidgets</strong> interactive UI embedded in the Jupyter notebook. Lets operators manually trigger any report on demand — bypassing the schedule, SQL readiness checks, and active flag — useful for urgent resends or testing without touching the scheduler.</div>
+            <ul class="feature-list">
+                <li>Dropdown auto-populated from live config — always reflects the current report list</li>
+                <li>Calls <code>run_report_job(force=True, honour_active_flag=False)</code> to bypass all guards</li>
+                <li>Output widget captures and displays logs inline below the button in real time</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">jupyter_widget.py <span>— manual trigger UI</span></div>
+                <pre><code class="language-python">report_dropdown = widgets.Dropdown(
+    options=list(config_loader.get_all_reports().keys()),
+    layout=widgets.Layout(width="500px")
+)
+
+def on_send(b):
+    with output:
+        output.clear_output()
+        run_report_job(
+            report_id          = report_dropdown.value,
+            config_loader      = config_loader,
+            full_config        = full_config,
+            force              = True,           # skip SQL readiness checks
+            honour_active_flag = False,          # send even if report is paused
+        )
+
+send_button.on_click(on_send)
+display(report_dropdown, send_button, output)</code></pre>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>hljs.highlightAll();</script>
+</body>
+</html>

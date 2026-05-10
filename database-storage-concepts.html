@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Storage Concepts</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .concept {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 0;
+        }
+        .visual {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .page {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border: 2px solid #388E3C;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+        }
+        .extent-box {
+            border: 3px dashed #FF9800;
+            padding: 10px;
+            border-radius: 8px;
+            background: #FFF3E0;
+        }
+        .heap-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: #E3F2FD;
+            border-radius: 8px;
+        }
+        .data-row {
+            background: #2196F3;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-align: center;
+        }
+        .btree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #F3E5F5;
+            border-radius: 8px;
+        }
+        .node {
+            padding: 15px 25px;
+            background: #9C27B0;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .leaf-nodes {
+            display: flex;
+            gap: 10px;
+        }
+        .leaf {
+            padding: 12px 20px;
+            background: #BA68C8;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        .connector {
+            width: 2px;
+            height: 20px;
+            background: #9C27B0;
+        }
+        code {
+            background: #263238;
+            color: #4CAF50;
+            padding: 15px;
+            border-radius: 5px;
+            display: block;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .example {
+            background: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 2px solid #4CAF50;
+        }
+        .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1 style="margin: 0;">📊 Database Storage Concepts</h1>
+            <a href="skills-sql.html" style="padding: 10px 20px; background-color: #9b8b6d; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 600; transition: all 0.3s ease;">← Back to SQL Skills</a>
+        </div>
+
+        <!-- PAGE -->
+        <div class="concept">
+            <h2>1. Page (8 KB)</h2>
+            <p>The smallest unit of storage. Think of it as a single sheet of paper where data is written.</p>
+            <div class="visual">
+                <div class="page">Page 1<br>8 KB</div>
+                <div class="page">Page 2<br>8 KB</div>
+                <div class="page">Page 3<br>8 KB</div>
+            </div>
+            <div class="label">Each page holds data rows, header info, and free space</div>
+        </div>
+
+        <!-- EXTENT -->
+        <div class="concept">
+            <h2>2. Extent (64 KB = 8 Pages)</h2>
+            <p>A collection of 8 consecutive pages. Database allocates space in extents for efficiency.</p>
+            <div class="extent-box">
+                <div class="visual">
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P1</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P2</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P3</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P4</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P5</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P6</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P7</div>
+                    <div class="page" style="background: #FF9800; border-color: #F57C00;">P8</div>
+                </div>
+            </div>
+            <div class="label">🔸 1 Extent = 8 Pages = 64 KB</div>
+        </div>
+
+        <!-- HEAP -->
+        <div class="concept">
+            <h2>3. Heap (Table without Clustered Index)</h2>
+            <p>Data stored in no particular order. Rows are inserted wherever there's space.</p>
+            <div class="heap-container">
+                <div class="data-row">ID: 5<br>John</div>
+                <div class="data-row">ID: 2<br>Alice</div>
+                <div class="data-row">ID: 8<br>Bob</div>
+                <div class="data-row">ID: 1<br>Eve</div>
+                <div class="data-row">ID: 9<br>Charlie</div>
+                <div class="data-row">ID: 3<br>Diana</div>
+                <div class="data-row">ID: 7<br>Frank</div>
+                <div class="data-row">ID: 4<br>Grace</div>
+            </div>
+            <div class="label">⚠️ No order - data scattered across pages</div>
+        </div>
+
+        <!-- B-TREE NODES -->
+        <div class="concept">
+            <h2>4. Nodes (B-Tree Index Structure)</h2>
+            <p>Organized tree structure with root, intermediate, and leaf nodes for fast lookups.</p>
+            <div class="btree">
+                <div class="node">ROOT<br>1-100</div>
+                <div style="display: flex; gap: 40px;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="connector"></div>
+                        <div class="node">Node<br>1-50</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="connector"></div>
+                        <div class="node">Node<br>51-100</div>
+                    </div>
+                </div>
+                <div class="leaf-nodes">
+                    <div class="leaf">1-25<br>Data→</div>
+                    <div class="leaf">26-50<br>Data→</div>
+                    <div class="leaf">51-75<br>Data→</div>
+                    <div class="leaf">76-100<br>Data→</div>
+                </div>
+            </div>
+            <div class="label">✓ Sorted structure - efficient searching</div>
+        </div>
+
+        <!-- EXAMPLE -->
+        <div class="example">
+            <h2>💡 Simple SELECT Example</h2>
+            <p><strong>Scenario:</strong> We have an Employees table with 10,000 rows</p>
+            
+            <h3>Query on HEAP (No Index):</h3>
+            <code>SELECT * FROM Employees WHERE EmployeeID = 5000;</code>
+            <p>🔴 <strong>Table Scan:</strong> Database reads ALL pages sequentially until it finds ID 5000<br>
+            → Might read 1,250 pages (assuming 8 rows per page)</p>
+
+            <h3>Query on CLUSTERED INDEX (B-Tree):</h3>
+            <code>SELECT * FROM Employees WHERE EmployeeID = 5000;</code>
+            <p>🟢 <strong>Index Seek:</strong> Database traverses B-Tree:<br>
+            → Root Node (1 page)<br>
+            → Intermediate Node (1 page)<br>
+            → Leaf Node with data (1 page)<br>
+            → <strong>Total: Only 3 pages read!</strong></p>
+
+            <h3>Visual Comparison:</h3>
+            <div style="display: flex; gap: 20px; margin-top: 15px; justify-content: space-around;">
+                <div style="text-align: center;">
+                    <strong>HEAP</strong><br>
+                    <span style="font-size: 40px;">📚📚📚...📚</span><br>
+                    <span style="color: #d32f2f;">Slow - Many reads</span>
+                </div>
+                <div style="text-align: center;">
+                    <strong>INDEXED</strong><br>
+                    <span style="font-size: 40px;">🎯</span><br>
+                    <span style="color: #388E3C;">Fast - Few reads</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEFINITIONS -->
+        <div class="concept" style="background: #FFF8E1; border-color: #F57C00;">
+            <h2>📖 Key Definitions</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #F57C00; font-size: 16px;">🔴 Full Table Scan</h3>
+                <p style="margin: 10px 0;"><strong>Definition:</strong> Database reads EVERY row in EVERY page of the entire table sequentially from start to end.</p>
+                <p style="margin: 10px 0; padding: 10px; background: white; border-radius: 4px;"><strong>When it happens:</strong> No index exists, or query doesn't use indexed columns.<br>
+                <strong>Performance:</strong> ❌ SLOW - reads all data even if you need just 1 row<br>
+                <strong>Example:</strong> SELECT * FROM Employees WHERE FirstName = 'John' (no index on FirstName)</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #F57C00; font-size: 16px;">📦 Heap</h3>
+                <p style="margin: 10px 0;"><strong>Definition:</strong> A table with NO clustered index. Data is stored in no particular order.</p>
+                <p style="margin: 10px 0; padding: 10px; background: white; border-radius: 4px;"><strong>Characteristics:</strong> 
+                - Data inserted wherever there's space<br>
+                - No physical ordering<br>
+                - Requires full table scan for lookups<br>
+                <strong>Use case:</strong> Temporary staging tables or small lookup tables</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #F57C00; font-size: 16px;">🟢 Index Seek</h3>
+                <p style="margin: 10px 0;"><strong>Definition:</strong> Database uses B-Tree index to jump directly to specific rows without scanning the entire table.</p>
+                <p style="margin: 10px 0; padding: 10px; background: white; border-radius: 4px;"><strong>When it happens:</strong> Query filters on indexed column with specific values (=, <, >, BETWEEN)<br>
+                <strong>Performance:</strong> ✅ FAST - reads only necessary pages<br>
+                <strong>Example:</strong> SELECT * FROM Employees WHERE EmployeeID = 100 (EmployeeID is indexed)</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #F57C00; font-size: 16px;">🟡 Full Index Scan</h3>
+                <p style="margin: 10px 0;"><strong>Definition:</strong> Database reads ALL rows in the index (not the table), but in sorted order.</p>
+                <p style="margin: 10px 0; padding: 10px; background: white; border-radius: 4px;"><strong>When it happens:</strong> Query needs all rows but can use index to avoid table access<br>
+                <strong>Performance:</strong> ⚠️ MODERATE - faster than table scan but slower than index seek<br>
+                <strong>Example:</strong> SELECT EmployeeID FROM Employees ORDER BY EmployeeID (index scan, no table access needed)</p>
+            </div>
+        </div>
+
+        <!-- CLUSTERED VS NON-CLUSTERED INDEX -->
+        <div class="concept" style="background: #F3E5F5; border-color: #9C27B0;">
+            <h2>🗂️ Clustered vs Non-Clustered Index</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                <!-- Clustered Index -->
+                <div style="background: white; padding: 15px; border-radius: 8px; border: 3px solid #9C27B0;">
+                    <h3 style="color: #9C27B0; text-align: center; margin-top: 0;">📚 Clustered Index</h3>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <div style="background: #9C27B0; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <strong>Index = Table</strong>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+                            <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Row 1: ID=1, Name=Alice</div>
+                            <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Row 2: ID=2, Name=Bob</div>
+                            <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Row 3: ID=3, Name=Charlie</div>
+                            <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Row 4: ID=4, Name=Diana</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; line-height: 1.6;">
+                        ✓ Data physically sorted by key<br>
+                        ✓ Leaf nodes = actual data rows<br>
+                        ✓ Only 1 per table<br>
+                        ✓ Usually on Primary Key<br>
+                        ✓ Fastest for range queries
+                    </div>
+                </div>
+
+                <!-- Non-Clustered Index -->
+                <div style="background: white; padding: 15px; border-radius: 8px; border: 3px solid #2196F3;">
+                    <h3 style="color: #2196F3; text-align: center; margin-top: 0;">🔖 Non-Clustered Index</h3>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <div style="background: #2196F3; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            <strong>Separate Index Structure</strong>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+                            <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Alice → 📍Row 1</div>
+                            <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Bob → 📍Row 2</div>
+                            <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Charlie → 📍Row 3</div>
+                            <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; width: 80%;">Diana → 📍Row 4</div>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 11px; color: #666;">↓ Points to actual data ↓</div>
+                    </div>
+                    <div style="font-size: 12px; line-height: 1.6;">
+                        ✓ Separate structure from table<br>
+                        ✓ Leaf nodes = pointers to data<br>
+                        ✓ Can have many per table<br>
+                        ✓ Extra lookup step needed<br>
+                        ✓ Good for specific columns
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #E8EAF6; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                <strong>📌 Key Difference:</strong> Clustered index IS the table (sorted), Non-clustered is a copy pointing to the table.
+            </div>
+        </div>
+
+        <!-- SELECT SCENARIOS -->
+        <div class="concept" style="background: #E8F5E9; border-color: #4CAF50;">
+            <h2>🎯 How SELECT Works: Two Main Scenarios</h2>
+
+            <!-- Scenario 1 -->
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #2E7D32; background: #C8E6C9; padding: 12px; border-radius: 5px;">
+                    Scenario 1: Selecting Clustered Index Column
+                </h3>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 15px;">
+                    <code style="background: #263238; color: #4CAF50; padding: 12px; display: block; border-radius: 4px; margin-bottom: 15px;">
+SELECT * FROM Employees WHERE EmployeeID = 5;<br>
+-- EmployeeID is the Clustered Index
+                    </code>
+
+                    <div style="display: flex; gap: 20px; align-items: center; margin-top: 20px;">
+                        <div style="flex: 1;">
+                            <div style="background: #9C27B0; color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 10px;">
+                                <strong>B-Tree Navigation</strong>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="background: #BA68C8; color: white; padding: 8px; border-radius: 4px; margin: 5px 0;">Root: 1-100</div>
+                                <div style="color: #9C27B0; font-size: 20px;">↓</div>
+                                <div style="background: #BA68C8; color: white; padding: 8px; border-radius: 4px; margin: 5px 0;">Node: 1-10</div>
+                                <div style="color: #9C27B0; font-size: 20px;">↓</div>
+                                <div style="background: #4CAF50; color: white; padding: 12px; border-radius: 4px; margin: 5px 0; font-weight: bold;">
+                                    LEAF: ID=5, John, IT, 50000
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1; background: #E8F5E9; padding: 15px; border-radius: 8px; border: 2px solid #4CAF50;">
+                            <strong style="color: #2E7D32;">✅ Result:</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li><strong>Steps:</strong> 3 page reads (Root → Intermediate → Leaf)</li>
+                                <li><strong>Data location:</strong> In leaf node itself</li>
+                                <li><strong>Performance:</strong> ⚡ FASTEST (direct access)</li>
+                                <li><strong>No extra lookup needed!</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #2E7D32; background: #C8E6C9; padding: 12px; border-radius: 5px;">
+                    Scenario 2: Selecting Non-Clustered Index Column
+                </h3>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 15px;">
+                    <code style="background: #263238; color: #4CAF50; padding: 12px; display: block; border-radius: 4px; margin-bottom: 15px;">
+SELECT * FROM Employees WHERE LastName = 'Smith';<br>
+-- LastName has Non-Clustered Index<br>
+-- EmployeeID is the Clustered Index
+                    </code>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+                        <!-- Step 1: Non-Clustered Index -->
+                        <div style="border: 2px solid #2196F3; border-radius: 8px; padding: 15px; background: #E3F2FD;">
+                            <div style="background: #2196F3; color: white; padding: 8px; border-radius: 4px; text-align: center; margin-bottom: 10px;">
+                                <strong>STEP 1: Search Non-Clustered Index</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-around; align-items: center;">
+                                <div>
+                                    <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; margin: 3px 0;">Root</div>
+                                    <div style="color: #2196F3;">↓</div>
+                                    <div style="background: #64B5F6; color: white; padding: 8px 15px; border-radius: 4px; margin: 3px 0;">Intermediate</div>
+                                    <div style="color: #2196F3;">↓</div>
+                                    <div style="background: #42A5F5; color: white; padding: 10px 15px; border-radius: 4px; margin: 3px 0; font-weight: bold;">
+                                        Leaf: Smith → 📍ID=5
+                                    </div>
+                                </div>
+                                <div style="font-size: 40px; color: #2196F3;">→</div>
+                                <div style="background: white; padding: 15px; border-radius: 5px; border: 2px dashed #2196F3;">
+                                    <strong>Found Pointer:</strong><br>
+                                    EmployeeID = 5
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Key Lookup -->
+                        <div style="border: 2px solid #9C27B0; border-radius: 8px; padding: 15px; background: #F3E5F5;">
+                            <div style="background: #9C27B0; color: white; padding: 8px; border-radius: 4px; text-align: center; margin-bottom: 10px;">
+                                <strong>STEP 2: Key Lookup in Clustered Index</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-around; align-items: center;">
+                                <div style="background: white; padding: 15px; border-radius: 5px; border: 2px dashed #9C27B0;">
+                                    <strong>Using ID=5</strong><br>
+                                    Find actual row
+                                </div>
+                                <div style="font-size: 40px; color: #9C27B0;">→</div>
+                                <div>
+                                    <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; margin: 3px 0;">Root</div>
+                                    <div style="color: #9C27B0;">↓</div>
+                                    <div style="background: #BA68C8; color: white; padding: 8px 15px; border-radius: 4px; margin: 3px 0;">Intermediate</div>
+                                    <div style="color: #9C27B0;">↓</div>
+                                    <div style="background: #4CAF50; color: white; padding: 12px 20px; border-radius: 4px; margin: 3px 0; font-weight: bold;">
+                                        ID=5, John Smith, IT, 50000 ✓
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Result -->
+                        <div style="background: #FFF3E0; padding: 15px; border-radius: 8px; border: 2px solid #FF9800;">
+                            <strong style="color: #E65100;">⚠️ Result:</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li><strong>Steps:</strong> ~6 page reads (3 in non-clustered + 3 in clustered)</li>
+                                <li><strong>Performance:</strong> ⚡ Good, but slower than clustered index seek</li>
+                                <li><strong>Called:</strong> "Key Lookup" or "Bookmark Lookup"</li>
+                                <li><strong>Trade-off:</strong> Extra work, but still much faster than table scan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #E1F5FE; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                <strong>💡 Pro Tip:</strong> For best performance, include commonly queried columns in the SELECT list as "INCLUDED COLUMNS" in non-clustered indexes to avoid key lookups. This is called a "covering index."
+            </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="concept" style="background: #E1F5FE; border-color: #0277BD;">
+            <h2>📝 Quick Summary</h2>
+            <ul>
+                <li><strong>Page:</strong> 8 KB block - basic storage unit</li>
+                <li><strong>Extent:</strong> 8 pages grouped together (64 KB)</li>
+                <li><strong>Heap:</strong> Unordered table - data everywhere</li>
+                <li><strong>Nodes:</strong> B-Tree structure - organized for speed</li>
+            </ul>
+            <p style="margin-top: 20px; padding: 15px; background: white; border-radius: 5px;">
+                <strong>💡 Key Takeaway:</strong> Indexes (B-Trees with nodes) dramatically improve query performance 
+                by organizing data, while heaps store data without order, requiring full scans for lookups.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

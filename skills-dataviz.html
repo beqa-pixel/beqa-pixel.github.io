@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Skills - Portfolio</title>
+    <!-- Highlight.js for DAX Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #9b8b6d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #7d6e54;
+            transform: translateX(-5px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #9b8b6d;
+            padding-bottom: 10px;
+        }
+
+        .dropdown-container {
+            margin-bottom: 30px;
+        }
+
+        .dropdown-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .dropdown-select {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            font-size: 14px;
+            border: 2px solid #dee2e6;
+            border-radius: 4px;
+            background-color: white;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-select:hover {
+            border-color: #9b8b6d;
+            box-shadow: 0 2px 8px rgba(155, 139, 109, 0.2);
+        }
+
+        .dropdown-select:focus {
+            outline: none;
+            border-color: #9b8b6d;
+            box-shadow: 0 0 0 3px rgba(155, 139, 109, 0.1);
+        }
+
+        .viewer {
+            margin-top: 30px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .viewer.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== PHOTO VIEWER ===== */
+        .photo-viewer {
+            text-align: center;
+        }
+
+        .photo-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 0;
+        }
+
+        .photo-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .photo-container {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 4px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        .photo-container img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== VIDEO VIEWER ===== */
+        .video-viewer {
+            text-align: center;
+        }
+
+        .video-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 0;
+        }
+
+        .video-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .video-container {
+            background-color: #000;
+            padding: 20px;
+            border-radius: 0 0 4px 4px;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container video,
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== CODE VIEWER ===== */
+        .code-viewer {
+            margin-top: 30px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 0;
+        }
+
+        .code-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-button {
+            padding: 8px 16px;
+            background-color: #9b8b6d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #7d6e54;
+            transform: scale(1.05);
+        }
+
+        .copy-button.copied {
+            background-color: #27ae60;
+        }
+
+        .code-container {
+            background-color: #1e1e1e;
+            border-radius: 0 0 4px 4px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        code {
+            color: inherit;
+            background-color: transparent;
+        }
+
+        /* DAX Syntax Highlighting */
+        .hljs-keyword {
+            color: #569cd6;
+            font-weight: 600;
+        }
+
+        .hljs-string {
+            color: #ce9178;
+        }
+
+        .hljs-number {
+            color: #b5cea8;
+        }
+
+        .hljs-literal {
+            color: #569cd6;
+        }
+
+        .hljs-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .hljs-function {
+            color: #dcdcaa;
+        }
+
+        .hljs-attr {
+            color: #9cdcfe;
+        }
+
+        .description {
+            background-color: #f0f7f4;
+            border-left: 4px solid #9b8b6d;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .description strong {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .dropdown-select {
+                max-width: 100%;
+            }
+
+            pre {
+                font-size: 12px;
+                padding: 15px;
+            }
+
+            .code-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .photo-container {
+                min-height: 300px;
+            }
+
+            .photo-container img {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Data Visualization Skills</h1>
+            <a href="index.html" class="back-button">← Back to CV</a>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Dropdown Section -->
+            <div class="section-title">Collections</div>
+            <div class="dropdown-container">
+                <label for="vizSelect" class="dropdown-label">Select a Visualization to View:</label>
+                <select id="vizSelect" class="dropdown-select">
+                    <option value="">-- Choose a visualization --</option>
+                    <option value="ppt" selected>Data Visualization in Analytics</option>
+                    <option value="cohort">Cohort Analyses</option>
+                    <option value="dax">Measure F(x) Colour</option>
+                </select>
+            </div>
+
+            <!-- PDF VIEWER -->
+            <div id="pptViewer" class="viewer">
+                <div class="photo-header">
+                    <h3>Data Visualization in Analytics</h3>
+                </div>
+                <div style="height: 700px;">
+                    <embed src="Data Visualization in Analytics.pdf" type="application/pdf" width="100%" height="100%" />
+                </div>
+            </div>
+
+            <!-- COHORT PHOTO VIEWER -->
+            <div id="cohortViewer" class="viewer photo-viewer">
+                <div class="photo-header">
+                    <h3>Cohort Analyses</h3>
+                </div>
+                <div class="photo-container">
+                    <img id="cohortPhoto" src="RollBack.png" alt="Cohort Analyses"/>
+                </div>
+            </div>
+
+
+
+            <!-- DAX CODE VIEWER -->
+            <div id="daxViewer" class="viewer code-viewer">
+                <div class="code-header">
+                    <h3>Measure F(x) Colour - DAX Code</h3>
+                    <button class="copy-button" id="copyButton" onclick="copyToClipboard()">📋 Copy Code</button>
+                </div>
+                <div class="code-container">
+                    <pre><code id="codeBlock" class="language-dax"></code></pre>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div id="vizDescription" class="description" style="display: none;">
+                <strong>Description:</strong> <span id="descriptionText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Visualization Content
+        const visualizations = {
+            ppt: {
+                title: 'Data Visualization in Analytics',
+                type: 'pdf',
+                description: 'A comprehensive presentation covering data visualization techniques and analytics insights.'
+            },
+            cohort: {
+                title: 'Cohort Analyses',
+                type: 'photo',
+                description: 'This heatmap shows how quickly loans that became overdue are successfully brought back to current status. The redder areas indicate slower recovery, while greener areas show faster collection success. Rows that turn green quickly represent loans with effective collection performance, while those staying red longer need improvement in collection strategy.'
+                // Photo will be inserted here - see instructions below
+            },
+            dax: {
+                title: 'Measure F(x) Colour',
+                type: 'code',
+                code: `RowMinMaxColor_Payment_Auto = 
+VAR CurrentValue = [Cumulative_Auto_Payment_Percentage]
+VAR RankValue =
+    RANKX(
+        ALLSELECTED('test Dialer_Compare_With_Scoring'[Flow]),
+        [Cumulative_Auto_Payment_Percentage],
+        ,
+        DESC,
+        DENSE
+    )
+RETURN
+SWITCH(
+    TRUE(),
+    RankValue = 1, "#345E37",  // Highest value (e.g., Light Green)
+    RankValue = 2, "#2E8B57",  // Second highest (choose your preferred color)
+    RankValue = 3, "#F7F7AA",  // Second lowest (choose your preferred color)
+    RankValue = 4, "#FDB5B5",  // Lowest value (e.g., Light Red)
+    "#EFF3BA"               // Fallback color
+)`,
+                description: 'DAX measure for conditional row coloring based on ranking. This formula ranks values and applies color codes: highest values in green, lowest in red, with intermediate colors for middle values.'
+            }
+        };
+
+        // Handle dropdown change
+        document.getElementById('vizSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const vizTypes = ['pptViewer', 'cohortViewer', 'daxViewer'];
+            const description = document.getElementById('vizDescription');
+
+            // Hide all viewers
+            vizTypes.forEach(id => {
+                document.getElementById(id).classList.remove('active');
+            });
+
+            if (selectedValue && visualizations[selectedValue]) {
+                const viz = visualizations[selectedValue];
+                
+                // Update description
+                document.getElementById('descriptionText').textContent = viz.description;
+                description.style.display = 'block';
+
+                // Show appropriate viewer
+                if (viz.type === 'photo') {
+                    document.getElementById('cohortViewer').classList.add('active');
+                } else if (viz.type === 'video') {
+                    document.getElementById('comparisonViewer').classList.add('active');
+                } else if (viz.type === 'pdf') {
+                    document.getElementById('pptViewer').classList.add('active');
+                } else if (viz.type === 'code') {
+                    const codeBlock = document.getElementById('codeBlock');
+                    codeBlock.textContent = viz.code;
+                    codeBlock.className = 'language-dax';
+                    hljs.highlightElement(codeBlock);
+                    document.getElementById('daxViewer').classList.add('active');
+                }
+            } else {
+                description.style.display = 'none';
+            }
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard() {
+            const codeBlock = document.getElementById('codeBlock');
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(function() {
+                const button = document.getElementById('copyButton');
+                const originalText = button.textContent;
+                
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                alert('Failed to copy to clipboard');
+            });
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('vizSelect').dispatchEvent(new Event('change'));
+        });
+    </script>
+</body>
+</html>

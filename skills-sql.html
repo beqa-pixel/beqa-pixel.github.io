@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Skills - Portfolio</title>
+    <!-- Highlight.js for SQL Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #9b8b6d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #7d6e54;
+            transform: translateX(-5px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #9b8b6d;
+            padding-bottom: 10px;
+        }
+
+        .dropdown-container {
+            margin-bottom: 30px;
+        }
+
+        .dropdown-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .dropdown-select {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            font-size: 14px;
+            border: 2px solid #dee2e6;
+            border-radius: 4px;
+            background-color: white;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-select:hover {
+            border-color: #9b8b6d;
+            box-shadow: 0 2px 8px rgba(155, 139, 109, 0.2);
+        }
+
+        .dropdown-select:focus {
+            outline: none;
+            border-color: #9b8b6d;
+            box-shadow: 0 0 0 3px rgba(155, 139, 109, 0.1);
+        }
+
+        .script-viewer {
+            margin-top: 30px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .script-viewer.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 0;
+        }
+
+        .script-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-button {
+            padding: 8px 16px;
+            background-color: #9b8b6d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #7d6e54;
+            transform: scale(1.05);
+        }
+
+        .copy-button.copied {
+            background-color: #27ae60;
+        }
+
+        .code-container {
+            background-color: #1e1e1e;
+            border-radius: 0 0 4px 4px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        code {
+            color: inherit;
+            background-color: transparent;
+        }
+
+        /* SQL Syntax Highlighting Colors */
+        .hljs-keyword {
+            color: #569cd6;
+            font-weight: 600;
+        }
+
+        .hljs-string {
+            color: #ce9178;
+        }
+
+        .hljs-number {
+            color: #b5cea8;
+        }
+
+        .hljs-literal {
+            color: #569cd6;
+        }
+
+        .hljs-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .hljs-function {
+            color: #dcdcaa;
+        }
+
+        .hljs-attr {
+            color: #9cdcfe;
+        }
+
+        .description {
+            background-color: #f0f7f4;
+            border-left: 4px solid #9b8b6d;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .description strong {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .dropdown-select {
+                max-width: 100%;
+            }
+
+            pre {
+                font-size: 12px;
+                padding: 15px;
+            }
+
+            .script-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>SQL Skills</h1>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <a href="database-storage-concepts.html" class="back-button" style="background-color: #667eea;">📊 Database Storage Concepts</a>
+                <a href="index.html" class="back-button">← Back to CV</a>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Dropdown Section -->
+            <div class="section-title">SQL Skills Showcase</div>
+            <div class="dropdown-container">
+                <label for="scriptSelect" class="dropdown-label">Select a Script to View:</label>
+                <select id="scriptSelect" class="dropdown-select">
+                    <option value="">-- Choose a script --</option>
+                    <option value="window" selected>Window Functions</option>
+                    <option value="incremental">Incremental Refresh with Procedures</option>
+                    <option value="optimization">SQL Script Optimization</option>
+                    <option value="indexing">Indexing SQL Tables</option>
+                    <option value="cte">Complex CTE</option>
+                    <option value="bonus">Collection Bonus Script</option>
+                </select>
+            </div>
+
+            <!-- Script Viewer -->
+            <div id="scriptViewer" class="script-viewer">
+                <div class="script-header">
+                    <h3 id="scriptTitle">Script</h3>
+                    <button class="copy-button" id="copyButton" onclick="copyToClipboard()">📋 Copy Script</button>
+                </div>
+                <div class="code-container">
+                    <pre><code id="codeBlock" class="language-sql"></code></pre>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div id="scriptDescription" class="description" style="display: none;">
+                <strong>Purpose:</strong> <span id="descriptionText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SQL Script Content
+        const scripts = {
+            window: {
+                title: 'Window Functions',
+                code: `-- Running Totals and Moving Averages
+SELECT 
+    order_date,
+    product_id,
+    sales_amount,
+    -- Running total
+    SUM(sales_amount) OVER (
+        PARTITION BY product_id 
+        ORDER BY order_date
+    ) AS cumulative_sales,
+    -- 3-month moving average
+    AVG(sales_amount) OVER (
+        PARTITION BY product_id 
+        ORDER BY order_date
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS moving_avg_3m
+FROM sales_data;
+
+-- LAG and LEAD for Period Comparisons
+SELECT 
+    customer_id,
+    transaction_date,
+    amount,
+    LAG(amount, 1) OVER (
+        PARTITION BY customer_id 
+        ORDER BY transaction_date
+    ) AS prev_amount,
+    amount - LAG(amount, 1, 0) OVER (
+        PARTITION BY customer_id 
+        ORDER BY transaction_date
+    ) AS change_from_prev
+FROM transactions;
+
+-- Ranking and Percentiles
+SELECT 
+    customer_id,
+    total_spent,
+    NTILE(4) OVER (ORDER BY total_spent DESC) AS quartile,
+    RANK() OVER (ORDER BY total_spent DESC) AS rank,
+    PERCENT_RANK() OVER (ORDER BY total_spent DESC) AS percentile
+FROM customer_totals;`,
+                description: 'Window functions for running totals, moving averages, LAG/LEAD comparisons, and ranking with NTILE and PERCENT_RANK.'
+            },
+            incremental: {
+                title: 'Incremental Refresh with Procedures',
+                code: `-- Control Table for Tracking Refresh Status
+CREATE TABLE refresh_control (
+    table_name VARCHAR(100) PRIMARY KEY,
+    last_refresh_date DATETIME,
+    last_id_processed BIGINT,
+    refresh_status VARCHAR(20),
+    rows_processed INT
+);
+
+-- Incremental Refresh Procedure
+CREATE OR ALTER PROCEDURE sp_incremental_refresh_sales
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @last_refresh DATETIME;
+    DECLARE @last_id BIGINT;
+    DECLARE @current_date DATETIME = GETDATE();
+    DECLARE @rows INT = 0;
+    
+    BEGIN TRY
+        -- Get last checkpoint
+        SELECT 
+            @last_refresh = last_refresh_date,
+            @last_id = last_id_processed
+        FROM refresh_control
+        WHERE table_name = 'fact_sales';
+        
+        -- Set defaults if first run
+        IF @last_refresh IS NULL
+        BEGIN
+            SET @last_refresh = '2020-01-01';
+            SET @last_id = 0;
+        END
+        
+        -- Incremental load: only new/modified records
+        INSERT INTO fact_sales (sale_id, customer_id, sale_date, amount)
+        SELECT sale_id, customer_id, sale_date, amount
+        FROM staging.sales
+        WHERE modified_date > @last_refresh
+            OR sale_id > @last_id;
+        
+        SET @rows = @@ROWCOUNT;
+        
+        -- Update checkpoint
+        UPDATE refresh_control
+        SET refresh_status = 'SUCCESS',
+            last_refresh_date = @current_date,
+            last_id_processed = (SELECT MAX(sale_id) FROM fact_sales),
+            rows_processed = @rows
+        WHERE table_name = 'fact_sales';
+        
+        PRINT 'Refresh completed. Rows: ' + CAST(@rows AS VARCHAR);
+        
+    END TRY
+    BEGIN CATCH
+        UPDATE refresh_control
+        SET refresh_status = 'FAILED'
+        WHERE table_name = 'fact_sales';
+        
+        THROW;
+    END CATCH
+END;`,
+                description: 'Incremental refresh pattern using stored procedures with checkpoint tracking for loading only new or modified records since last refresh.'
+            },
+            optimization: {
+                title: 'SQL Script Optimization',
+                code: `-- Avoid Functions on Indexed Columns
+-- ❌ BAD: Prevents index usage
+SELECT * FROM orders
+WHERE YEAR(order_date) = 2024;
+
+-- ✅ GOOD: Allows index seek
+SELECT * FROM orders
+WHERE order_date >= '2024-01-01' AND order_date < '2025-01-01';
+
+-- Use EXISTS Instead of IN
+-- ❌ BAD: Slower on large datasets
+SELECT customer_name FROM customers
+WHERE customer_id IN (SELECT customer_id FROM orders);
+
+-- ✅ GOOD: More efficient
+SELECT customer_name FROM customers c
+WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id);
+
+-- Avoid Correlated Subqueries
+-- ❌ BAD: Runs for each row
+SELECT 
+    c.customer_name,
+    (SELECT COUNT(*) FROM orders WHERE customer_id = c.customer_id) AS order_count
+FROM customers c;
+
+-- ✅ GOOD: Single aggregation
+SELECT 
+    c.customer_name,
+    ISNULL(o.order_count, 0) AS order_count
+FROM customers c
+LEFT JOIN (
+    SELECT customer_id, COUNT(*) AS order_count
+    FROM orders
+    GROUP BY customer_id
+) o ON c.customer_id = o.customer_id;
+
+-- Select Only Needed Columns
+-- ❌ BAD: Unnecessary data transfer
+SELECT * FROM orders WHERE order_date >= '2024-01-01';
+
+-- ✅ GOOD: Only required columns
+SELECT order_id, customer_id, total_amount 
+FROM orders 
+WHERE order_date >= '2024-01-01';`,
+                description: 'Key SQL optimization techniques including proper index usage, EXISTS vs IN, avoiding correlated subqueries, and selecting only needed columns.'
+            },
+            indexing: {
+                title: 'Indexing SQL Tables',
+                code: `-- Clustered Index (Primary Key)
+CREATE TABLE orders (
+    order_id INT IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+    customer_id INT NOT NULL,
+    order_date DATETIME NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
+
+-- Non-Clustered Index for Lookups
+CREATE NONCLUSTERED INDEX IX_orders_customer 
+ON orders(customer_id);
+
+-- Composite Index (Column Order Matters!)
+CREATE NONCLUSTERED INDEX IX_orders_customer_date 
+ON orders(customer_id, order_date DESC);
+
+-- Covering Index with INCLUDE
+CREATE NONCLUSTERED INDEX IX_orders_covering 
+ON orders(customer_id, order_date)
+INCLUDE (total_amount, status);
+
+-- Filtered Index for Subset
+CREATE NONCLUSTERED INDEX IX_orders_active 
+ON orders(order_date)
+WHERE status IN ('Pending', 'Processing');
+
+-- Check Index Fragmentation
+SELECT 
+    OBJECT_NAME(ips.object_id) AS TableName,
+    i.name AS IndexName,
+    ips.avg_fragmentation_in_percent
+FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'DETAILED') ips
+JOIN sys.indexes i ON ips.object_id = i.object_id AND ips.index_id = i.index_id
+WHERE ips.avg_fragmentation_in_percent > 10
+ORDER BY ips.avg_fragmentation_in_percent DESC;
+
+-- Rebuild Fragmented Index
+ALTER INDEX IX_orders_customer ON orders REBUILD;
+
+-- Find Missing Indexes
+SELECT 
+    migs.avg_user_impact,
+    'CREATE INDEX IX_' + OBJECT_NAME(mid.object_id) + 
+    ' ON ' + mid.statement + ' (' + 
+    ISNULL(mid.equality_columns, '') + ')' AS create_statement
+FROM sys.dm_db_missing_index_details mid
+JOIN sys.dm_db_missing_index_groups mig ON mid.index_handle = mig.index_handle
+JOIN sys.dm_db_missing_index_group_stats migs ON mig.index_group_handle = migs.group_handle
+WHERE migs.avg_user_impact > 50
+ORDER BY migs.avg_user_impact DESC;`,
+                description: 'Essential indexing concepts including clustered, non-clustered, composite, covering, and filtered indexes, plus maintenance queries for checking fragmentation and finding missing indexes.'
+            },
+            cte: {
+                title: 'Complex CTE',
+                code: `-- Recursive CTE: Organizational Hierarchy
+WITH OrgHierarchy AS (
+    -- Anchor: Top-level (no manager)
+    SELECT 
+        employee_id,
+        employee_name,
+        manager_id,
+        0 AS level,
+        CAST(employee_name AS VARCHAR(500)) AS path
+    FROM employees
+    WHERE manager_id IS NULL
+    
+    UNION ALL
+    
+    -- Recursive: Employees with managers
+    SELECT 
+        e.employee_id,
+        e.employee_name,
+        e.manager_id,
+        oh.level + 1,
+        oh.path + ' > ' + e.employee_name
+    FROM employees e
+    JOIN OrgHierarchy oh ON e.manager_id = oh.employee_id
+)
+SELECT 
+    employee_id,
+    REPLICATE('  ', level) + employee_name AS employee_name,
+    level,
+    path
+FROM OrgHierarchy
+ORDER BY path;
+
+-- Multiple CTEs: Customer Segmentation
+WITH CustomerOrders AS (
+    -- Total orders per customer
+    SELECT 
+        customer_id,
+        COUNT(*) AS total_orders,
+        SUM(total_amount) AS total_spent,
+        MAX(order_date) AS last_order_date
+    FROM orders
+    GROUP BY customer_id
+),
+CustomerMetrics AS (
+    -- Calculate metrics
+    SELECT 
+        customer_id,
+        total_orders,
+        total_spent,
+        total_spent / total_orders AS avg_order_value,
+        CASE 
+            WHEN DATEDIFF(DAY, last_order_date, GETDATE()) <= 90 THEN 'Active'
+            WHEN DATEDIFF(DAY, last_order_date, GETDATE()) <= 365 THEN 'At Risk'
+            ELSE 'Churned'
+        END AS status
+    FROM CustomerOrders
+)
+SELECT 
+    cm.*,
+    c.customer_name,
+    NTILE(4) OVER (ORDER BY cm.total_spent DESC) AS quartile
+FROM CustomerMetrics cm
+JOIN customers c ON cm.customer_id = c.customer_id
+ORDER BY cm.total_spent DESC;
+
+-- Recursive CTE: Bill of Materials
+WITH BOM_Explosion AS (
+    -- Level 0: Top product
+    SELECT 
+        parent_id AS top_product,
+        component_id,
+        quantity,
+        1 AS level
+    FROM product_structure
+    WHERE parent_id = 1
+    
+    UNION ALL
+    
+    -- Recursive: Sub-components
+    SELECT 
+        bom.top_product,
+        ps.component_id,
+        bom.quantity * ps.quantity,
+        bom.level + 1
+    FROM BOM_Explosion bom
+    JOIN product_structure ps ON bom.component_id = ps.parent_id
+)
+SELECT 
+    top_product,
+    component_id,
+    level,
+    SUM(quantity) AS total_qty_needed
+FROM BOM_Explosion
+GROUP BY top_product, component_id, level
+ORDER BY level, component_id;`,
+                description: 'Recursive CTEs for hierarchical data (org charts, BOM), and multiple CTEs for complex data transformations and customer segmentation analysis.'
+            },
+            bonus: {
+                title: 'Collection Bonus Script',
+                code: `-- ===================================================================
+-- SQL Script - Based on Original Complex Script Logic
+-- ===================================================================
+
+-- ===================================================================
+-- 1. Get Latest Loan Portfolio Data (replaces #Loan_base_Legal)
+-- ===================================================================
+DROP TABLE IF EXISTS #loan_base;
+
+SELECT  
+    loan_id,
+    snapshot_date AS calculation_date,
+    product_type AS ProductName,
+    overdue_days,
+    (principal_balance + interest_balance + penalty_balance) AS TotalOverDue,
+    write_off_date
+INTO #loan_base
+FROM loan_portfolio
+WHERE snapshot_date >= '2025-01-01'  -- Data from 2025 onwards
+  AND snapshot_date <= GETDATE()  -- Up to today
+  AND (write_off_date IS NULL OR write_off_date > snapshot_date);
+
+
+-- ===================================================================
+-- 2. Get Payment Data (replaces #payments_Legal)
+-- ===================================================================
+DROP TABLE IF EXISTS #payments;
+
+SELECT 
+    loan_id,
+    payment_date,
+    payment_amount AS payment_sum,
+    product_type AS Product
+INTO #payments
+FROM loan_payments
+WHERE payment_date >= '2025-01-01'  -- Payments from 2025 onwards
+  AND payment_date <= GETDATE();
+
+
+-- ===================================================================
+-- 3. Get Active Users (replaces #users and #usergropChanges_Legal)
+-- ===================================================================
+DROP TABLE IF EXISTS #active_users;
+
+SELECT 
+    user_id,
+    login,
+    name,
+    team AS GroupName,
+    active_from,
+    ISNULL(active_till, GETDATE()) AS active_till
+INTO #active_users
+FROM users
+WHERE active_from <= GETDATE()
+  AND (active_till IS NULL)
+  AND team IN ('Legal', 'Fergana', 'Karakalpakiya', 'Hard TFS', 'Legal Fergana', 'Legal Karakalpakiya');
+
+
+
+-- ===================================================================
+-- 4. Get Loan Assignment History (replaces #History_executor)
+-- ===================================================================
+DROP TABLE IF EXISTS #loan_assignments_expanded;
+
+SELECT 
+    la.loan_id,
+    la.user_login AS to_user,
+    au.name AS Name,
+    au.GroupName,
+    CAST(la.assigned_date AS DATE) AS change_time,
+    ISNULL(CAST(la.unassigned_date AS DATE), CAST(GETDATE() AS DATE)) AS active_till
+INTO #loan_assignments_expanded
+FROM loan_assignments la
+LEFT JOIN #active_users au ON au.login = la.user_login
+WHERE CAST(la.assigned_date AS DATE) >= '2025-01-01'  -- Assignments from 2025 onwards
+  AND au.GroupName IS NOT NULL;
+
+-- ===================================================================
+-- 5. Create Monthly Calendar (replaces #Calendar2024)
+-- ===================================================================
+DROP TABLE IF EXISTS #monthly_calendar;
+
+CREATE TABLE #monthly_calendar (
+    CalendarDate DATE
+);
+
+DECLARE @StartDate DATE = '2025-01-01';
+DECLARE @EndDate DATE = GETDATE();
+DECLARE @CurrentDate DATE = @StartDate;
+
+WHILE @CurrentDate <= @EndDate
+BEGIN
+    INSERT INTO #monthly_calendar (CalendarDate)
+    VALUES (@CurrentDate);
+
+    SET @CurrentDate = DATEADD(MONTH, 1, @CurrentDate);
+END;
+
+-- ===================================================================
+-- 6. Match Payments to Responsible Agents (replaces #Recovery_1 and #Recovery_2)
+-- ===================================================================
+
+
+DROP TABLE IF EXISTS #recovery_with_agents;
+
+WITH RankedPayments AS (
+    SELECT
+        p.loan_id,
+        p.payment_date,
+        p.payment_sum,
+        p.Product,
+        la.to_user,
+        la.Name,
+        la.GroupName,
+        la.change_time,
+        la.active_till,
+        lb.overdue_days,
+        ROW_NUMBER() OVER (
+            PARTITION BY p.loan_id, p.payment_date, p.payment_sum, p.Product
+            ORDER BY ABS(DATEDIFF(DAY, la.change_time, p.payment_date)) ASC
+        ) AS rn
+    FROM #payments AS p
+    LEFT JOIN #loan_assignments_expanded AS la
+        ON p.loan_id = la.loan_id
+        AND p.payment_date BETWEEN la.change_time AND la.active_till
+    LEFT JOIN #loan_base AS lb
+        ON p.loan_id = lb.loan_id 
+        AND p.payment_date = DATEADD(DAY, 1, lb.calculation_date)
+    WHERE la.to_user IS NOT NULL
+)
+SELECT
+    loan_id,
+    payment_date,
+    payment_sum,
+    Product,
+    to_user,
+    Name,
+    GroupName,
+    change_time,
+    active_till,
+    overdue_days
+INTO #recovery_with_agents
+FROM RankedPayments
+WHERE rn = 1;  -- Select only the closest match
+
+-- ===================================================================
+-- 7. Calculate Monthly Portfolio Assignments (replaces #Main logic)
+-- ===================================================================
+DROP TABLE IF EXISTS #monthly_portfolio;
+
+WITH MonthlyAssignments AS (
+    SELECT 
+        la.loan_id,
+        la.to_user,
+        la.Name,
+        la.GroupName,
+        EOMONTH(lb.calculation_date) AS assignment_month,
+        lb.ProductName,
+        MAX(lb.TotalOverDue) AS max_balance,
+        MAX(lb.overdue_days) AS max_overdue_days
+    FROM #loan_assignments_expanded la
+    JOIN #loan_base lb ON la.loan_id = lb.loan_id
+    WHERE lb.calculation_date BETWEEN la.change_time AND la.active_till
+      AND EOMONTH(lb.calculation_date) >= EOMONTH('2025-01-01')
+    GROUP BY 
+        la.loan_id, 
+        la.to_user, 
+        la.Name, 
+        la.GroupName,
+        EOMONTH(lb.calculation_date),
+        lb.ProductName
+)
+SELECT 
+    assignment_month,
+    to_user,
+    Name,
+    GroupName,
+    ProductName,
+    COUNT(loan_id) AS assigned_loans,
+    SUM(max_balance) AS total_balance,
+    ROUND(AVG(max_balance), 0) AS avg_balance,
+    ROUND(AVG(max_overdue_days), 0) AS avg_overdue_days
+INTO #monthly_portfolio
+FROM MonthlyAssignments
+GROUP BY 
+    assignment_month,
+    to_user,
+    Name,
+    GroupName,
+    ProductName;
+
+-- ===================================================================
+-- 8. Final Combined Report (replaces #BI_Final_legal)
+-- ===================================================================
+
+DROP TABLE IF EXISTS #final_report;
+
+SELECT 
+    CAST(payment_date AS DATE) AS recovery_date,
+    to_user,
+    Name,
+    GroupName,
+    Product,
+    SUM(payment_sum) AS total_recovery,
+    COUNT(DISTINCT loan_id) AS unique_loans_recovered,
+    COUNT(*) AS total_transactions
+FROM #recovery_with_agents
+GROUP BY 
+    CAST(payment_date AS DATE),
+    to_user,
+    Name,
+    GroupName,
+    Product
+ORDER BY recovery_date DESC;`,
+                description: 'Collection performance analysis matching loan payments to responsible collectors with payment tracking and team-based recovery reporting.'
+            }
+        };
+
+        // Handle dropdown change
+        document.getElementById('scriptSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const viewer = document.getElementById('scriptViewer');
+            const description = document.getElementById('scriptDescription');
+
+            if (selectedValue && scripts[selectedValue]) {
+                const script = scripts[selectedValue];
+                
+                // Update title
+                document.getElementById('scriptTitle').textContent = script.title;
+                
+                // Update code and highlight - FIX: Clear previous highlighting
+                const codeBlock = document.getElementById('codeBlock');
+                delete codeBlock.dataset.highlighted; // Clear previous highlight
+                codeBlock.textContent = script.code;
+                codeBlock.className = 'language-sql';
+                hljs.highlightElement(codeBlock);
+                
+                // Update description
+                document.getElementById('descriptionText').textContent = script.description;
+                
+                // Show elements
+                viewer.classList.add('active');
+                description.style.display = 'block';
+            } else {
+                viewer.classList.remove('active');
+                description.style.display = 'none';
+            }
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard() {
+            const codeBlock = document.getElementById('codeBlock');
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(function() {
+                const button = document.getElementById('copyButton');
+                const originalText = button.textContent;
+                
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        // Auto-load the default selected option on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('scriptSelect');
+            const selectedValue = selectElement.value;
+            
+            if (selectedValue && scripts[selectedValue]) {
+                // Trigger the change event to load the default script
+                selectElement.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>
+
+
