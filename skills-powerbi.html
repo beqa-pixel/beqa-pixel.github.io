@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Skills — Beka Razmadze</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .header-accent {
+            position: absolute;
+            top: 0; right: 0;
+            width: 600px; height: 150px;
+            background: linear-gradient(135deg, #7c8ba0 0%, #a0956b 25%, #3d4f65 50%, #1e2d47 100%);
+            clip-path: polygon(100% 0, 100% 60%, 50% 100%, 0 30%, 0 0);
+            z-index: 0;
+        }
+
+        /* ── LEFT SIDEBAR ── */
+        .left-sidebar {
+            width: 35%;
+            background-color: #f8f9fa;
+            padding: 60px 40px;
+            border-right: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .section { margin-bottom: 35px; }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #9b8b6d;
+            padding-bottom: 8px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #9b8b6d;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            transition: color .2s;
+        }
+        .back-link:hover { color: #2c3e50; }
+
+        .project-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #2c3e50;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            padding: 5px 11px;
+            background-color: #e9ecef;
+            color: #2c3e50;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 3px 3px 3px 0;
+            letter-spacing: .4px;
+        }
+        .tech-tag.highlight {
+            background-color: #9b8b6d;
+            color: #fff;
+            border-color: #9b8b6d;
+        }
+
+        .metric-row { display: flex; gap: 12px; margin-bottom: 12px; }
+        .metric-box {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+        .metric-num { font-size: 22px; font-weight: 700; color: #2c3e50; display: block; }
+        .metric-label { font-size: 10px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .info-icon { font-size: 15px; flex-shrink: 0; }
+
+        /* ── RIGHT CONTENT ── */
+        .right-content {
+            width: 65%;
+            padding: 60px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-section { margin-bottom: 40px; position: relative; z-index: 2; }
+
+        .page-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8b6d;
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 40px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .job-title { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 18px; }
+        .accent-line { width: 80px; height: 4px; background-color: #9b8b6d; margin-bottom: 22px; }
+
+        .profile-text {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 35px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 25px;
+        }
+
+        .work-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ── SCREENSHOT SECTIONS ── */
+        .screenshot-section {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 25px;
+        }
+        .screenshot-section::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px;
+            width: 10px; height: 10px;
+            background-color: #9b8b6d;
+            border-radius: 50%;
+        }
+        .screenshot-section::after {
+            content: '';
+            position: absolute;
+            left: 4px; top: 18px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background-color: #e9ecef;
+        }
+        .screenshot-section:last-child::after { display: none; }
+
+        .screenshot-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .screenshot-title { font-weight: 700; color: #2c3e50; font-size: 14px; }
+        .screenshot-badge {
+            font-size: 11px;
+            color: #9b8b6d;
+            font-weight: 600;
+            background: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #e9ecef;
+        }
+
+        .screenshot-desc {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .feature-list { list-style: none; padding: 0; margin-bottom: 14px; }
+        .feature-list li {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .feature-list li::before { content: '▸'; margin-right: 8px; color: #9b8b6d; }
+
+        .screenshot-img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .screenshot-img:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        }
+
+        .img-caption {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            animation: fadeIn .3s ease;
+        }
+        .lightbox-content {
+            position: relative;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 90%;
+            max-height: 90vh;
+            text-align: center;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -40px; right: 0;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+        .lightbox-close:hover { color: #9b8b6d; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .pdf-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #9b8b6d;
+            color: white;
+            border: 1px solid #9b8b6d;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .pdf-btn:hover {
+            background-color: #2c3e50;
+            border-color: #2c3e50;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44,62,80,0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .left-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e9ecef; padding: 40px; }
+            .right-content { width: 100%; padding: 40px; }
+            .header-accent { width: 100%; height: 100px; clip-path: polygon(100% 0, 100% 40%, 50% 100%, 0 20%, 0 0); }
+        }
+        @media (max-width: 768px) {
+            .name { font-size: 28px; }
+            .left-sidebar, .right-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="header-accent"></div>
+<div class="container">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="left-sidebar">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+        <div class="section">
+            <div class="project-badge">Power BI Project</div>
+            <div class="section-title">Project Stats</div>
+            <div class="metric-row">
+                <div class="metric-box"><span class="metric-num">3</span><div class="metric-label">Views</div></div>
+                <div class="metric-box"><span class="metric-num">DAX</span><div class="metric-label">Language</div></div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-box"><span class="metric-num">Loan</span><div class="metric-label">Domain</div></div>
+                <div class="metric-box"><span class="metric-num">Risk</span><div class="metric-label">Focus</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Tools Used</div>
+            <span class="tech-tag highlight">Power BI</span>
+            <span class="tech-tag highlight">DAX</span>
+            <span class="tech-tag">Cohort Analysis</span>
+            <span class="tech-tag">SQL Server</span>
+            <span class="tech-tag">Data Modelling</span>
+            <span class="tech-tag">Risk Analytics</span>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Project Info</div>
+            <div class="info-item">
+                <div class="info-icon">🏢</div>
+                <div>Space International — TBC Bank Uzbekistan</div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🎯</div>
+                <div>Track overdue loans and measure repayment behaviour over time across cohorts</div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">📅</div>
+                <div>January 2024 — February 2025</div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">📄</div>
+                <div>
+                    <a href="Cohort-Analyses.pdf" target="_blank" class="pdf-btn">📥 Download Full Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content">
+
+        <div class="header-section">
+            <div class="page-label">Power BI Project</div>
+            <div class="name">Loan Cohort Analysis</div>
+            <div class="job-title">DUE LOAN REPAYMENT TRACKING DASHBOARD</div>
+            <div class="accent-line"></div>
+        </div>
+
+        <div class="profile-text">
+            An interactive Power BI dashboard built to analyse the repayment behaviour of overdue loans at TBC Bank Uzbekistan. The report groups loans into cohorts based on when they became due, then tracks how many days passed before each loan was repaid — giving the risk team a clear picture of repayment patterns, delays, and potential problem areas across different time periods.
+        </div>
+
+        <div class="work-title">DASHBOARD VIEWS</div>
+
+        <!-- Screenshot 1 -->
+        <div class="screenshot-section">
+            <div class="screenshot-header">
+                <div class="screenshot-title">Manual Review Application Info</div>
+                <div class="screenshot-badge">View 1</div>
+            </div>
+            <div class="screenshot-desc">
+                A fraud and risk detection table showing every suspicious behaviour type flagged during loan application processing. Each row represents a fraud signal (e.g. Suspicious Device, Same Mobile Number, No Credit History) with full metrics across the review pipeline.
+            </div>
+            <ul class="feature-list">
+                <li>Tracks Applications MR Rate, Cases Created, Approval Rate, and Rejection Rate per fraud signal</li>
+                <li>Fraud quantity, fraud amount, and fraud hit rate calculated per category using DAX</li>
+                <li>Conditional colour coding instantly highlights high-risk signal types</li>
+                <li>Slicers for Product (CC/ICL), Date range, Year, and Monthly/Weekly/Daily granularity</li>
+            </ul>
+            <img src="Table_Analyses.png" alt="Manual Review Application Info" class="screenshot-img" onclick="openLightbox(this.src)">
+            <div class="img-caption">Click image to enlarge</div>
+        </div>
+
+        <!-- Screenshot 2 -->
+        <div class="screenshot-section">
+            <div class="screenshot-header">
+                <div class="screenshot-title">Cohort Payment Matrix</div>
+                <div class="screenshot-badge">View 2</div>
+            </div>
+            <div class="screenshot-desc">
+                The core cohort analysis view. Rows represent the Day of Month (DOM) a loan became due. Columns show each subsequent day. Each cell shows the % of that cohort's total payment collected by that day — revealing exactly how repayment behaviour evolves over time.
+            </div>
+            <ul class="feature-list">
+                <li>Left table: Total Payment in M. UZS by Day of Month cohort</li>
+                <li>Right matrix: % Payment Type Distribution — how repayments spread day by day per cohort</li>
+                <li>Conditional formatting (red → green) immediately shows fast vs slow-paying cohorts</li>
+                <li>Date slicer, Year and YearMonth filters for period-level drill-down</li>
+            </ul>
+            <img src="RollBack_1.png" alt="Cohort Payment Matrix" class="screenshot-img" onclick="openLightbox(this.src)">
+            <div class="img-caption">Click image to enlarge</div>
+        </div>
+
+        <!-- Screenshot 3 -->
+        <div class="screenshot-section">
+            <div class="screenshot-header">
+                <div class="screenshot-title">Sales Geographic Analysis</div>
+                <div class="screenshot-badge">View 3</div>
+            </div>
+            <div class="screenshot-desc">
+                A geographic breakdown of sales performance by continent and country. Shows order volumes, total income, costs, and profit across Europe, North America, and Pacific regions — with a world map visual and trend lines for monthly order and income growth.
+            </div>
+            <ul class="feature-list">
+                <li>World map visual with order density shading by country</li>
+                <li>Profit margin: 42% overall — broken down per continent and country</li>
+                <li>Monthly trend lines for order count (45K total) and total income ($9.2M)</li>
+                <li>Drillable hierarchy: Continent → Country with income, cost, and profit columns</li>
+            </ul>
+            <img src="Sales_analyses.png" alt="Sales Geographic Analysis" class="screenshot-img" onclick="openLightbox(this.src)">
+            <div class="img-caption">Click image to enlarge</div>
+        </div>
+
+        <!-- DAX Functions Reference -->
+        <div style="margin-top: 50px;">
+            <div class="work-title">DAX FUNCTIONS USED</div>
+
+            <!-- Simple Functions -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">Basic Functions</div>
+                    <div class="screenshot-badge">Foundation</div>
+                </div>
+                <div class="screenshot-desc">The building blocks of every DAX measure — used for straightforward aggregations and conditional logic.</div>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px 14px; text-align:left; width:22%;">Function</th>
+                            <th style="padding:10px 14px; text-align:left; width:35%;">Syntax</th>
+                            <th style="padding:10px 14px; text-align:left;">What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">SUM</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">SUM(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Adds up all values in a column. Used for total loan amounts, payment totals.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">COUNT</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">COUNT(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Counts how many rows have a value. Used for number of applications, cases created.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">AVERAGE</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">AVERAGE(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Returns the mean of all values. Used for average approval rate, average fraud hit rate.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">DIVIDE</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">DIVIDE(numerator, denominator, 0)</td>
+                            <td style="padding:9px 14px; color:#555;">Safe division — returns 0 instead of error when dividing by zero. Used for all rate calculations.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">IF</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">IF(condition, true, false)</td>
+                            <td style="padding:9px 14px; color:#555;">Returns one value if a condition is true, another if false. Used for flagging overdue loans.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">DISTINCTCOUNT</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">DISTINCTCOUNT(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Counts unique values only. Used for counting unique borrowers, unique fraud signal types.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- CALCULATE & FILTER -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">CALCULATE & FILTER</div>
+                    <div class="screenshot-badge">Context Modifiers</div>
+                </div>
+                <div class="screenshot-desc">The most powerful DAX functions — they change the filter context, allowing you to compute measures under specific conditions.</div>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px 14px; text-align:left; width:22%;">Function</th>
+                            <th style="padding:10px 14px; text-align:left; width:35%;">Syntax</th>
+                            <th style="padding:10px 14px; text-align:left;">What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">CALCULATE</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">CALCULATE(expression, filter1, filter2)</td>
+                            <td style="padding:9px 14px; color:#555;">Evaluates a measure under modified filters. Example: total fraud amount only for approved cases.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">FILTER</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">FILTER(Table, condition)</td>
+                            <td style="padding:9px 14px; color:#555;">Returns a filtered table. Used inside CALCULATE to narrow down to specific cohorts or date ranges.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">ALL</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">ALL(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Removes filters from a column — used to calculate totals regardless of slicer selection.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">ALLSELECTED</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">ALLSELECTED(Table[Column])</td>
+                            <td style="padding:9px 14px; color:#555;">Keeps slicer filters but removes row/column context. Used for % of selected total calculations.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- X Functions -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">X (Iterator) Functions</div>
+                    <div class="screenshot-badge">Row by Row</div>
+                </div>
+                <div class="screenshot-desc">X functions iterate row by row through a table, perform a calculation on each row, then aggregate the results. More flexible than simple aggregations when you need row-level logic.</div>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px 14px; text-align:left; width:22%;">Function</th>
+                            <th style="padding:10px 14px; text-align:left; width:35%;">Syntax</th>
+                            <th style="padding:10px 14px; text-align:left;">What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">SUMX</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">SUMX(Table, expression)</td>
+                            <td style="padding:9px 14px; color:#555;">Calculates an expression for each row then sums the results. Example: SUMX(Loans, [Amount] * [Rate]) to get weighted totals.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">AVERAGEX</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">AVERAGEX(Table, expression)</td>
+                            <td style="padding:9px 14px; color:#555;">Same as SUMX but returns the average. Used for average repayment rate per cohort row.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">COUNTX</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">COUNTX(Table, expression)</td>
+                            <td style="padding:9px 14px; color:#555;">Counts rows where the expression returns a non-blank value. Used for counting valid fraud cases per type.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">MAXX</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">MAXX(Table, expression)</td>
+                            <td style="padding:9px 14px; color:#555;">Returns the maximum result across all rows. Used for finding the peak overdue day per cohort.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">MINX</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">MINX(Table, expression)</td>
+                            <td style="padding:9px 14px; color:#555;">Returns the minimum result across all rows. Used for earliest repayment day in a cohort.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SUMMARIZE Functions -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">SUMMARIZE Functions</div>
+                    <div class="screenshot-badge">Grouping & Aggregation</div>
+                </div>
+                <div class="screenshot-desc">Used to group data and compute aggregations — the DAX equivalent of SQL's GROUP BY. Essential for building cohort-level summaries.</div>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px 14px; text-align:left; width:22%;">Function</th>
+                            <th style="padding:10px 14px; text-align:left; width:35%;">Syntax</th>
+                            <th style="padding:10px 14px; text-align:left;">What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">SUMMARIZE</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">SUMMARIZE(Table, GroupBy, "Name", expr)</td>
+                            <td style="padding:9px 14px; color:#555;">Groups a table by one or more columns and adds calculated columns. Like SQL GROUP BY. Used to summarise payments per cohort date.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">SUMMARIZECOLUMNS</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">SUMMARIZECOLUMNS(GroupBy, filter, "Name", expr)</td>
+                            <td style="padding:9px 14px; color:#555;">More powerful version of SUMMARIZE — supports filters and is optimised for large datasets. Used for the cohort matrix data model.</td>
+                        </tr>
+                        <tr style="background:#f8f9fa;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">ADDCOLUMNS</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">ADDCOLUMNS(Table, "Name", expr)</td>
+                            <td style="padding:9px 14px; color:#555;">Adds calculated columns to an existing table without grouping. Used to enrich cohort tables with computed metrics.</td>
+                        </tr>
+                        <tr style="background:#fff;">
+                            <td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">GROUPBY</td>
+                            <td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">GROUPBY(Table, GroupBy, "Name", expr)</td>
+                            <td style="padding:9px 14px; color:#555;">Similar to SUMMARIZE but works within the current filter context. Used for dynamic groupings inside measures.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+            <!-- Hidden Gem Functions -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">Hidden Gem Functions</div>
+                    <div class="screenshot-badge">Less Known</div>
+                </div>
+                <div class="screenshot-desc">Powerful but rarely taught DAX functions that solve problems most people struggle with using basic aggregations.</div>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px 14px; text-align:left; width:22%;">Function</th>
+                            <th style="padding:10px 14px; text-align:left; width:35%;">Syntax</th>
+                            <th style="padding:10px 14px; text-align:left;">What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f8f9fa;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">VALUES</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">VALUES(Table[Column])</td><td style="padding:9px 14px; color:#555;">Returns unique values in the current filter context. Unlike DISTINCT, it includes blank rows from relationships. Used when iterating over filtered unique values.</td></tr>
+                        <tr style="background:#fff;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">SELECTEDVALUE</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">SELECTEDVALUE(Column, default)</td><td style="padding:9px 14px; color:#555;">Returns the column value when only one is filtered — returns default otherwise. Perfect for showing the selected slicer value in a card title.</td></tr>
+                        <tr style="background:#f8f9fa;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">HASONEVALUE</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">HASONEVALUE(Table[Column])</td><td style="padding:9px 14px; color:#555;">Returns TRUE if only one value exists in the current context. Used to guard calculations that only make sense for a single selection.</td></tr>
+                        <tr style="background:#fff;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">ISINSCOPE</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">ISINSCOPE(Table[Column])</td><td style="padding:9px 14px; color:#555;">Returns TRUE when a column is in the current grouping level of a matrix. Used to show subtotals and grand totals differently in the same measure.</td></tr>
+                        <tr style="background:#f8f9fa;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">EARLIER</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">EARLIER(Table[Column])</td><td style="padding:9px 14px; color:#555;">References a column value from an outer row context during nested iteration. Used in calculated columns to compare each row against others in the same table.</td></tr>
+                        <tr style="background:#fff;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">USERELATIONSHIP</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">USERELATIONSHIP(col1, col2)</td><td style="padding:9px 14px; color:#555;">Activates an inactive relationship for a specific measure. Essential in date tables with multiple date columns — e.g. due date vs payment date.</td></tr>
+                        <tr style="background:#f8f9fa;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">KEEPFILTERS</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">CALCULATE(expr, KEEPFILTERS(filter))</td><td style="padding:9px 14px; color:#555;">Adds a filter without removing existing ones — opposite of CALCULATE's default which replaces filters. Prevents unexpected results in complex filter contexts.</td></tr>
+                        <tr style="background:#fff;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">TREATAS</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">TREATAS(table, col1, col2)</td><td style="padding:9px 14px; color:#555;">Applies a virtual relationship between tables that aren't physically related. Useful for dynamic segmentation without changing the data model.</td></tr>
+                        <tr style="background:#f8f9fa;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">CROSSFILTER</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">CROSSFILTER(col1, col2, direction)</td><td style="padding:9px 14px; color:#555;">Changes filter direction of a relationship for one measure only — useful when you need bidirectional filtering for a specific calculation.</td></tr>
+                        <tr style="background:#fff;"><td style="padding:9px 14px; font-weight:700; color:#9b8b6d; font-family:'Courier New',monospace;">NAMEOF</td><td style="padding:9px 14px; font-family:'Courier New',monospace; color:#2c3e50;">NAMEOF(Table[Column])</td><td style="padding:9px 14px; color:#555;">Returns the name of a column or measure as a string. Useful for dynamic titles that auto-update when a measure is renamed.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- DAX Combinations -->
+            <div class="screenshot-section">
+                <div class="screenshot-header">
+                    <div class="screenshot-title">Common DAX Combinations</div>
+                    <div class="screenshot-badge">Real Patterns</div>
+                </div>
+                <div class="screenshot-desc">Patterns you actually use in production dashboards — combinations of multiple functions solving real business problems.</div>
+
+                <div style="display:flex; flex-direction:column; gap:14px; margin-top:10px;">
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">📈 Running Total (Cumulative Sum)</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">Running Total =
+CALCULATE(
+    SUM(Payments[Amount]),
+    FILTER(
+        ALL(Dates[Date]),
+        Dates[Date] &lt;= MAX(Dates[Date])
+    )
+)</div>
+                        <div style="font-size:12px; color:#555;">Keeps adding to the total as dates increase. ALL() removes the date filter, then FILTER re-applies it up to the current date. Used to show cumulative payments collected over time.</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">📊 % of Total</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">% of Total =
+DIVIDE(
+    SUM(Loans[Amount]),
+    CALCULATE(SUM(Loans[Amount]), ALL(Loans))
+)</div>
+                        <div style="font-size:12px; color:#555;">Divides each row's value by the grand total. ALL(Loans) removes all filters to get the full total. Used for fraud share % and repayment share per cohort.</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">🔄 Month-over-Month Change %</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">Last Month = 
+CALCULATE(SUM(Sales[Amount]), DATEADD(Dates[Date], -1, MONTH))
+
+MoM Change % =
+DIVIDE(SUM(Sales[Amount]) - [Last Month], [Last Month])</div>
+                        <div style="font-size:12px; color:#555;">DATEADD shifts the date context back by 1 month. Subtracting gives the absolute change, dividing gives the % change. Used for MoM growth on income and order count cards.</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">🏆 Rank (Top N by Value)</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">Fraud Rank =
+RANKX(
+    ALL(FraudTypes[Name]),
+    [Fraud Amount],
+    ,
+    DESC,
+    DENSE
+)</div>
+                        <div style="font-size:12px; color:#555;">Ranks each fraud type by total fraud amount. ALL() ensures every type is ranked against the full list regardless of filters. DENSE means no gaps (1,2,2,3 not 1,2,2,4).</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">📅 Dynamic Title from Slicer</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">Chart Title =
+"Payments for " &amp;
+SELECTEDVALUE(Dates[YearMonth], "All Periods")</div>
+                        <div style="font-size:12px; color:#555;">Builds a text string that changes based on slicer selection. If one month is selected shows "Payments for 2025-06". If multiple or none selected, shows "Payments for All Periods". Used for dynamic dashboard titles.</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">🎯 Cohort Repayment Rate</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">Repayment Rate % =
+DIVIDE(
+    CALCULATE(
+        SUM(Loans[PaidAmount]),
+        Loans[Status] = "Paid"
+    ),
+    SUM(Loans[DueAmount])
+)</div>
+                        <div style="font-size:12px; color:#555;">The core cohort measure — what % of due amount was actually paid. CALCULATE filters to "Paid" loans for the numerator. DIVIDE handles zero due amounts. This powers every cell in the cohort matrix.</div>
+                    </div>
+
+                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; border-radius:0 6px 6px 0; padding:14px 16px;">
+                        <div style="font-size:12px; font-weight:700; color:#2c3e50; margin-bottom:6px;">🔢 Moving Average (7-day)</div>
+                        <div style="font-family:'Courier New',monospace; font-size:11.5px; color:#1a1a2e; background:#fff; padding:10px 12px; border-radius:4px; border:1px solid #e9ecef; margin-bottom:8px; white-space:pre;">7-Day Avg =
+AVERAGEX(
+    DATESINPERIOD(
+        Dates[Date],
+        LASTDATE(Dates[Date]),
+        -7,
+        DAY
+    ),
+    [Total Payments]
+)</div>
+                        <div style="font-size:12px; color:#555;">Calculates the average of the last 7 days for each point on the chart. DATESINPERIOD returns a table of the last 7 dates. AVERAGEX then evaluates Total Payments for each of those days and averages them. Smooths out daily spikes.</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <img id="lightbox-img" src="" alt="Dashboard view">
+    </div>
+</div>
+
+<script>
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').style.display = 'block';
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+</script>
+</body>
+</html>
