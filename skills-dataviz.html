@@ -7,7 +7,24 @@
     <!-- Highlight.js for DAX Syntax Highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #16212C;
+            --ink-soft: #24333F;
+            --paper: #FBF9F4;
+            --paper-line: #E7E1D2;
+            --slate: #5C6773;
+            --slate-light: #8B94A0;
+            --brass: #AD8A4E;
+            --brass-deep: #8C6D37;
+            --code-teal: #4C7A73;
+            --cream: #EDE7DA;
+            --cream-dim: #B9C3CC;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,9 +32,9 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: 'Public Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--paper);
+            color: var(--slate);
             min-height: 100vh;
             padding: 40px 20px;
         }
@@ -25,44 +42,50 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: var(--paper);
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(22, 33, 44, 0.08);
             overflow: hidden;
+            border: 1px solid var(--paper-line);
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
+            background: linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+            color: var(--cream);
             padding: 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 3px solid var(--brass);
         }
 
         .header h1 {
+            font-family: 'Fraunces', serif;
             font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         .back-button {
             padding: 10px 20px;
-            background-color: #9b8b6d;
-            color: white;
-            border: none;
+            background-color: transparent;
+            color: var(--brass);
+            border: 1px solid var(--brass);
             border-radius: 4px;
-            font-size: 14px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            letter-spacing: 0.5px;
         }
 
         .back-button:hover {
-            background-color: #7d6e54;
-            transform: translateX(-5px);
+            background-color: var(--brass);
+            color: var(--ink);
+            transform: translateX(-3px);
         }
 
         .content {
@@ -70,11 +93,14 @@
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2c3e50;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink);
             margin-bottom: 20px;
-            border-bottom: 2px solid #9b8b6d;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--paper-line);
             padding-bottom: 10px;
         }
 
@@ -86,7 +112,7 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--ink);
             margin-bottom: 8px;
         }
 
@@ -95,24 +121,24 @@
             max-width: 400px;
             padding: 12px 15px;
             font-size: 14px;
-            border: 2px solid #dee2e6;
+            border: 1px solid var(--paper-line);
             border-radius: 4px;
             background-color: white;
-            color: #2c3e50;
+            color: var(--ink);
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
         }
 
         .dropdown-select:hover {
-            border-color: #9b8b6d;
-            box-shadow: 0 2px 8px rgba(155, 139, 109, 0.2);
+            border-color: var(--brass);
+            box-shadow: 0 2px 8px rgba(173, 138, 78, 0.15);
         }
 
         .dropdown-select:focus {
             outline: none;
-            border-color: #9b8b6d;
-            box-shadow: 0 0 0 3px rgba(155, 139, 109, 0.1);
+            border-color: var(--brass);
+            box-shadow: 0 0 0 3px rgba(173, 138, 78, 0.12);
         }
 
         .viewer {
@@ -142,8 +168,8 @@
         }
 
         .photo-header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--ink);
+            color: var(--cream);
             padding: 15px 20px;
             border-radius: 4px 4px 0 0;
             margin-bottom: 0;
@@ -157,7 +183,7 @@
         }
 
         .photo-container {
-            background-color: #f8f9fa;
+            background-color: var(--paper);
             padding: 30px;
             border-radius: 0 0 4px 4px;
             display: flex;
@@ -179,8 +205,8 @@
         }
 
         .video-header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--ink);
+            color: var(--cream);
             padding: 15px 20px;
             border-radius: 4px 4px 0 0;
             margin-bottom: 0;
@@ -222,15 +248,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--ink);
+            color: var(--cream);
             padding: 15px 20px;
             border-radius: 4px 4px 0 0;
             margin-bottom: 0;
         }
 
         .code-header h3 {
-            font-size: 14px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
@@ -238,8 +265,8 @@
 
         .copy-button {
             padding: 8px 16px;
-            background-color: #9b8b6d;
-            color: white;
+            background-color: var(--brass);
+            color: var(--ink);
             border: none;
             border-radius: 4px;
             font-size: 12px;
@@ -249,7 +276,8 @@
         }
 
         .copy-button:hover {
-            background-color: #7d6e54;
+            background-color: var(--brass-deep);
+            color: white;
             transform: scale(1.05);
         }
 
@@ -310,18 +338,18 @@
         }
 
         .description {
-            background-color: #f0f7f4;
-            border-left: 4px solid #9b8b6d;
+            background-color: rgba(76, 122, 115, 0.08);
+            border-left: 4px solid var(--code-teal);
             padding: 15px 20px;
             border-radius: 4px;
             margin-top: 20px;
             font-size: 13px;
-            color: #333;
+            color: var(--slate);
             line-height: 1.6;
         }
 
         .description strong {
-            color: #2c3e50;
+            color: var(--ink);
         }
 
         @media (max-width: 768px) {

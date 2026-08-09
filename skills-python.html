@@ -6,74 +6,94 @@
     <title>Python Skills — Beka Razmadze</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #16212C;
+            --ink-soft: #24333F;
+            --paper: #FBF9F4;
+            --paper-line: #E7E1D2;
+            --slate: #5C6773;
+            --slate-light: #8B94A0;
+            --brass: #AD8A4E;
+            --brass-deep: #8C6D37;
+            --code-teal: #4C7A73;
+            --cream: #EDE7DA;
+            --cream-dim: #B9C3CC;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: 'Public Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--paper);
+            color: var(--slate);
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background-color: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background-color: var(--paper);
+            box-shadow: 0 0 40px rgba(22, 33, 44, 0.08);
             display: flex;
             min-height: 100vh;
         }
 
-        .header-accent {
-            position: absolute;
-            top: 0; right: 0;
-            width: 600px; height: 150px;
-            background: linear-gradient(135deg, #7c8ba0 0%, #a0956b 25%, #3d4f65 50%, #1e2d47 100%);
-            clip-path: polygon(100% 0, 100% 60%, 50% 100%, 0 30%, 0 0);
-            z-index: 0;
-        }
+        .header-accent { display: none; }
 
         /* ── LEFT SIDEBAR ── */
         .left-sidebar {
             width: 35%;
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+            color: var(--cream);
             padding: 60px 40px;
-            border-right: 1px solid #e9ecef;
+            border-right: none;
             position: relative;
+        }
+        .left-sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 3px; height: 100%;
+            background: var(--brass);
         }
 
         .section { margin-bottom: 35px; }
 
         .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #9b8b6d;
-            padding-bottom: 8px;
+            color: var(--brass);
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(237, 231, 218, 0.18);
+            padding-bottom: 10px;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #9b8b6d;
+            color: var(--brass);
             text-decoration: none;
-            font-size: 13px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 40px;
             transition: color .2s;
         }
-        .back-link:hover { color: #2c3e50; }
+        .back-link:hover { color: var(--cream); }
 
         .project-badge {
             display: inline-block;
             padding: 4px 10px;
-            background-color: #2c3e50;
-            color: #fff;
+            background-color: var(--brass);
+            color: var(--ink);
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -85,19 +105,20 @@
         .tech-tag {
             display: inline-block;
             padding: 5px 11px;
-            background-color: #e9ecef;
-            color: #2c3e50;
-            border: 1px solid #dee2e6;
+            background-color: rgba(237, 231, 218, 0.08);
+            color: var(--cream-dim);
+            border: 1px solid rgba(237, 231, 218, 0.18);
             border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 500;
             margin: 3px 3px 3px 0;
             letter-spacing: .4px;
         }
         .tech-tag.highlight {
-            background-color: #9b8b6d;
-            color: #fff;
-            border-color: #9b8b6d;
+            background-color: var(--brass);
+            color: var(--ink);
+            border-color: var(--brass);
         }
 
         .module-item {
@@ -111,25 +132,25 @@
             border-left: 3px solid transparent;
         }
         .module-item:hover {
-            background: #fff;
-            border-left-color: #9b8b6d;
+            background: rgba(237, 231, 218, 0.06);
+            border-left-color: var(--brass);
         }
         .module-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
         .module-info { flex: 1; }
-        .module-name { font-size: 12px; font-weight: 700; color: #2c3e50; margin-bottom: 2px; }
-        .module-desc { font-size: 11px; color: #888; line-height: 1.4; }
+        .module-name { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--cream); margin-bottom: 2px; }
+        .module-desc { font-size: 11px; color: var(--slate-light); line-height: 1.4; }
 
         .metric-row { display: flex; gap: 12px; margin-bottom: 12px; }
         .metric-box {
             flex: 1;
-            background: #fff;
-            border: 1px solid #e9ecef;
+            background: rgba(237, 231, 218, 0.05);
+            border: 1px solid rgba(237, 231, 218, 0.15);
             border-radius: 6px;
             padding: 12px 10px;
             text-align: center;
         }
-        .metric-num { font-size: 22px; font-weight: 700; color: #2c3e50; display: block; }
-        .metric-label { font-size: 10px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+        .metric-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--brass); display: block; }
+        .metric-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--slate-light); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
 
         /* ── RIGHT CONTENT ── */
         .right-content {
@@ -142,44 +163,48 @@
         .header-section { margin-bottom: 40px; position: relative; z-index: 2; }
 
         .page-label {
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #9b8b6d;
-            margin-bottom: 6px;
+            color: var(--brass-deep);
+            margin-bottom: 8px;
         }
 
         .name {
+            font-family: 'Fraunces', serif;
             font-size: 40px;
-            font-weight: 700;
-            color: #2c3e50;
+            font-weight: 600;
+            color: var(--ink);
             letter-spacing: -1px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
-        .job-title { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 18px; }
+        .job-title { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--code-teal); letter-spacing: 1px; margin-bottom: 20px; }
 
-        .accent-line { width: 80px; height: 4px; background-color: #9b8b6d; margin-bottom: 22px; }
+        .accent-line { width: 60px; height: 3px; background-color: var(--brass); margin-bottom: 24px; }
 
         .profile-text {
-            font-size: 13px;
-            line-height: 1.8;
-            color: #555;
-            text-align: justify;
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--slate);
+            text-align: left;
             margin-bottom: 35px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--paper-line);
             padding-bottom: 25px;
         }
 
         .work-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2c3e50;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink);
             margin-bottom: 20px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--paper-line);
             padding-bottom: 12px;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         /* ── ARCHITECTURE ── */
@@ -190,9 +215,9 @@
             gap: 6px;
             margin-bottom: 10px;
             padding: 16px;
-            background: #f8f9fa;
+            background: var(--paper);
             border-radius: 8px;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--paper-line);
         }
         .arch-node {
             display: flex;
@@ -201,43 +226,30 @@
             gap: 3px;
             padding: 8px 12px;
             background: #fff;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--paper-line);
             border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 10px;
             font-weight: 700;
-            color: #2c3e50;
+            color: var(--ink);
             letter-spacing: .4px;
             text-align: center;
             min-width: 68px;
         }
         .arch-node span { font-size: 15px; }
-        .arch-node.primary { background: #2c3e50; color: #fff; border-color: #2c3e50; }
-        .arch-node.accent  { background: #9b8b6d; color: #fff; border-color: #9b8b6d; }
-        .arch-arrow { color: #9b8b6d; font-size: 16px; font-weight: bold; }
+        .arch-node.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .arch-node.accent  { background: var(--brass); color: var(--ink); border-color: var(--brass); }
+        .arch-arrow { color: var(--brass); font-size: 16px; font-weight: bold; }
 
         /* ── MODULE SECTIONS ── */
         .module-section {
             margin-bottom: 32px;
             position: relative;
-            padding-left: 25px;
+            padding-left: 20px;
+            border-left: 2px solid var(--paper-line);
         }
-        .module-section::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 8px;
-            width: 10px; height: 10px;
-            background-color: #9b8b6d;
-            border-radius: 50%;
-        }
-        .module-section::after {
-            content: '';
-            position: absolute;
-            left: 4px; top: 18px;
-            width: 2px;
-            height: calc(100% + 10px);
-            background-color: #e9ecef;
-        }
-        .module-section:last-child::after { display: none; }
+        .module-section::before,
+        .module-section::after { content: none; }
 
         .module-header {
             display: flex;
@@ -246,57 +258,57 @@
             margin-bottom: 6px;
             flex-wrap: wrap;
         }
-        .module-title { font-weight: 700; color: #2c3e50; font-size: 14px; }
+        .module-title { font-weight: 700; color: var(--ink); font-size: 14px; }
         .module-filename {
             font-size: 11px;
-            color: #9b8b6d;
-            font-family: 'Courier New', monospace;
+            color: var(--brass-deep);
+            font-family: 'IBM Plex Mono', monospace;
             font-weight: 600;
-            background: #f8f9fa;
+            background: var(--paper);
             padding: 2px 7px;
             border-radius: 3px;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--paper-line);
         }
-        .module-role { font-size: 11px; color: #888; font-style: italic; }
+        .module-role { font-size: 11px; color: var(--slate-light); font-style: italic; }
 
-        .module-description { font-size: 12px; color: #555; line-height: 1.7; margin-bottom: 10px; }
+        .module-description { font-size: 12.5px; color: var(--slate); line-height: 1.7; margin-bottom: 10px; }
 
         .feature-list { list-style: none; padding: 0; margin-bottom: 12px; }
         .feature-list li {
-            font-size: 12px;
-            color: #555;
+            font-size: 12.5px;
+            color: var(--slate);
             margin-bottom: 5px;
             line-height: 1.5;
         }
-        .feature-list li::before { content: '▸'; margin-right: 8px; color: #9b8b6d; }
+        .feature-list li::before { content: '▸'; margin-right: 8px; color: var(--code-teal); }
 
         .code-block {
             border-radius: 6px;
             overflow: hidden;
             margin-top: 10px;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--paper-line);
         }
         .code-header {
-            background: #2c3e50;
-            color: #9b8b6d;
+            background: var(--ink);
+            color: var(--brass);
             padding: 6px 14px;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
+            font-family: 'IBM Plex Mono', monospace;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .code-header span { color: #aaa; font-weight: 400; font-style: italic; }
+        .code-header span { color: var(--cream-dim); font-weight: 400; font-style: italic; }
         pre { margin: 0; }
         pre code.hljs { font-size: 11.5px; padding: 14px; line-height: 1.55; }
 
         @media (max-width: 1024px) {
             .container { flex-direction: column; }
-            .left-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e9ecef; padding: 40px; }
+            .left-sidebar { width: 100%; border-right: none; border-bottom: 3px solid var(--brass); padding: 40px; }
+            .left-sidebar::after { display: none; }
             .right-content { width: 100%; padding: 40px; }
-            .header-accent { width: 100%; height: 100px; clip-path: polygon(100% 0, 100% 40%, 50% 100%, 0 20%, 0 0); }
         }
         @media (max-width: 768px) {
             .name { font-size: 28px; }
@@ -378,19 +390,19 @@
             <div class="work-title">THE PROBLEM I SOLVED</div>
             <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
                 <div style="flex:1; min-width:220px;">
-                    <div style="background:#f8f9fa; border-left:4px solid #9b8b6d; padding:16px 18px; border-radius:0 6px 6px 0; margin-bottom:12px;">
-                        <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#9b8b6d; margin-bottom:8px;">Before</div>
-                        <div style="font-size:12px; color:#555; line-height:1.8;">Every day, someone had to manually open each Excel report, wait for it to refresh from the database, copy the table, paste it into an Outlook email, and send it to the right people — repeated for every report, every day.</div>
+                    <div style="background:var(--paper); border-left:4px solid var(--brass); padding:16px 18px; border-radius:0 6px 6px 0; margin-bottom:12px; border-top:1px solid var(--paper-line); border-right:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);">
+                        <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--brass-deep); margin-bottom:8px;">Before</div>
+                        <div style="font-size:12.5px; color:var(--slate); line-height:1.8;">Every day, someone had to manually open each Excel report, wait for it to refresh from the database, copy the table, paste it into an Outlook email, and send it to the right people — repeated for every report, every day.</div>
                     </div>
-                    <div style="background:#f8f9fa; border-left:4px solid #2c3e50; padding:16px 18px; border-radius:0 6px 6px 0;">
-                        <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#2c3e50; margin-bottom:8px;">After</div>
-                        <div style="font-size:12px; color:#555; line-height:1.8;">A Python system runs unattended on a server — checking data readiness, refreshing Excel, composing and sending emails automatically at scheduled times. The team manages everything by editing a single Excel config file. No code changes needed to add or reschedule a report.</div>
+                    <div style="background:var(--paper); border-left:4px solid var(--code-teal); padding:16px 18px; border-radius:0 6px 6px 0; border-top:1px solid var(--paper-line); border-right:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);">
+                        <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--code-teal); margin-bottom:8px;">After</div>
+                        <div style="font-size:12.5px; color:var(--slate); line-height:1.8;">A Python system runs unattended on a server — checking data readiness, refreshing Excel, composing and sending emails automatically at scheduled times. The team manages everything by editing a single Excel config file. No code changes needed to add or reschedule a report.</div>
                     </div>
                 </div>
                 <div style="flex-shrink:0; width:260px;">
-                    <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#2c3e50; margin-bottom:8px;">Live Slack Dashboard</div>
-                    <img src="Slack_Photo.png" alt="Slack status dashboard generated by the system" style="width:100%; border-radius:6px; box-shadow:0 2px 12px rgba(0,0,0,0.12); border:1px solid #e9ecef;">
-                    <div style="font-size:11px; color:#888; margin-top:6px; font-style:italic;">Auto-generated PNG posted to Slack — updates every 5 minutes</div>
+                    <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Live Slack Dashboard</div>
+                    <img src="Slack_Photo.png" alt="Slack status dashboard generated by the system" style="width:100%; border-radius:6px; box-shadow:0 2px 12px rgba(22,33,44,0.12); border:1px solid var(--paper-line);">
+                    <div style="font-size:11px; color:var(--slate-light); margin-top:6px; font-style:italic;">Auto-generated PNG posted to Slack — updates every 5 minutes</div>
                 </div>
             </div>
         </div>

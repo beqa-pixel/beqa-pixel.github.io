@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Center — Beka Razmadze</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #16212C;
+            --ink-soft: #24333F;
+            --paper: #FBF9F4;
+            --paper-line: #E7E1D2;
+            --slate: #5C6773;
+            --slate-light: #8B94A0;
+            --brass: #AD8A4E;
+            --brass-deep: #8C6D37;
+            --code-teal: #4C7A73;
+            --cream: #EDE7DA;
+            --cream-dim: #B9C3CC;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Public Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--paper);
+            color: var(--slate);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--paper);
+            box-shadow: 0 0 40px rgba(22, 33, 44, 0.08);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .header-accent { display: none; }
+
+        /* ── LEFT SIDEBAR ── */
+        .left-sidebar {
+            width: 35%;
+            background: linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+            color: var(--cream);
+            padding: 60px 40px;
+            border-right: none;
+            position: relative;
+        }
+        .left-sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 3px; height: 100%;
+            background: var(--brass);
+        }
+
+        .section { margin-bottom: 35px; }
+
+        .section-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--brass);
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(237, 231, 218, 0.18);
+            padding-bottom: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brass);
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            transition: color .2s;
+        }
+        .back-link:hover { color: var(--cream); }
+
+        .project-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: var(--brass);
+            color: var(--ink);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            padding: 5px 11px;
+            background-color: rgba(237, 231, 218, 0.08);
+            color: var(--cream-dim);
+            border: 1px solid rgba(237, 231, 218, 0.18);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            margin: 3px 3px 3px 0;
+            letter-spacing: .4px;
+        }
+        .tech-tag.highlight {
+            background-color: var(--brass);
+            color: var(--ink);
+            border-color: var(--brass);
+        }
+
+        .module-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: background .2s;
+            border-left: 3px solid transparent;
+        }
+        .module-item:hover {
+            background: rgba(237, 231, 218, 0.06);
+            border-left-color: var(--brass);
+        }
+        .module-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+        .module-info { flex: 1; }
+        .module-name { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--cream); margin-bottom: 2px; }
+        .module-desc { font-size: 11px; color: var(--slate-light); line-height: 1.4; }
+
+        .metric-row { display: flex; gap: 12px; margin-bottom: 12px; }
+        .metric-box {
+            flex: 1;
+            background: rgba(237, 231, 218, 0.05);
+            border: 1px solid rgba(237, 231, 218, 0.15);
+            border-radius: 6px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+        .metric-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--brass); display: block; }
+        .metric-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--slate-light); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+        /* ── RIGHT CONTENT ── */
+        .right-content {
+            width: 65%;
+            padding: 60px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-section { margin-bottom: 40px; position: relative; z-index: 2; }
+
+        .page-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--brass-deep);
+            margin-bottom: 8px;
+        }
+
+        .name {
+            font-family: 'Fraunces', serif;
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .job-title { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--code-teal); letter-spacing: 1px; margin-bottom: 20px; }
+
+        .accent-line { width: 60px; height: 3px; background-color: var(--brass); margin-bottom: 24px; }
+
+        .profile-text {
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--slate);
+            text-align: left;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--paper-line);
+            padding-bottom: 25px;
+        }
+
+        .work-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--paper-line);
+            padding-bottom: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* ── ARCHITECTURE ── */
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding: 16px;
+            background: var(--paper);
+            border-radius: 8px;
+            border: 1px solid var(--paper-line);
+        }
+        .arch-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 8px 12px;
+            background: #fff;
+            border: 1px solid var(--paper-line);
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: .4px;
+            text-align: center;
+            min-width: 68px;
+        }
+        .arch-node span { font-size: 15px; }
+        .arch-node.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .arch-node.accent  { background: var(--brass); color: var(--ink); border-color: var(--brass); }
+        .arch-arrow { color: var(--brass); font-size: 16px; font-weight: bold; }
+
+        /* ── MODULE SECTIONS ── */
+        .module-section {
+            margin-bottom: 32px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--paper-line);
+        }
+        .module-section::before,
+        .module-section::after { content: none; }
+
+        .module-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .module-title { font-weight: 700; color: var(--ink); font-size: 14px; }
+        .module-filename {
+            font-size: 11px;
+            color: var(--brass-deep);
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            background: var(--paper);
+            padding: 2px 7px;
+            border-radius: 3px;
+            border: 1px solid var(--paper-line);
+        }
+        .module-role { font-size: 11px; color: var(--slate-light); font-style: italic; }
+
+        .module-description { font-size: 12.5px; color: var(--slate); line-height: 1.7; margin-bottom: 10px; }
+
+        .feature-list { list-style: none; padding: 0; margin-bottom: 12px; }
+        .feature-list li {
+            font-size: 12.5px;
+            color: var(--slate);
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .feature-list li::before { content: '▸'; margin-right: 8px; color: var(--code-teal); }
+
+        .code-block {
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 10px;
+            border: 1px solid var(--paper-line);
+        }
+        .code-header {
+            background: var(--ink);
+            color: var(--brass);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-family: 'IBM Plex Mono', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .code-header span { color: var(--cream-dim); font-weight: 400; font-style: italic; }
+        pre { margin: 0; }
+        pre code.hljs { font-size: 11.5px; padding: 14px; line-height: 1.55; }
+
+        .screenshot-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+            background: repeating-linear-gradient(135deg, var(--paper) 0px, var(--paper) 10px, #F1ECE0 10px, #F1ECE0 20px);
+            border: 1.5px dashed var(--paper-line);
+            border-radius: 8px;
+            color: var(--slate-light);
+            font-size: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .screenshot-placeholder.wide {
+            min-height: 260px;
+        }
+
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .left-sidebar { width: 100%; border-right: none; border-bottom: 3px solid var(--brass); padding: 40px; }
+            .left-sidebar::after { display: none; }
+            .right-content { width: 100%; padding: 40px; }
+        }
+        @media (max-width: 768px) {
+            .name { font-size: 28px; }
+            .left-sidebar, .right-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="header-accent"></div>
+<div class="container">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="left-sidebar">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+        <div class="section">
+            <div class="project-badge">Internal Web Tool</div>
+            <div class="section-title">Project Stats</div>
+            <div class="metric-row">
+                <div class="metric-box"><span class="metric-num">6</span><div class="metric-label">Pre-checks / Job</div></div>
+                <div class="metric-box"><span class="metric-num">24/7</span><div class="metric-label">Unattended</div></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Tech Stack</div>
+            <span class="tech-tag highlight">Python</span>
+            <span class="tech-tag highlight">FastAPI</span>
+            <span class="tech-tag highlight">SQL Server</span>
+            <span class="tech-tag highlight">StarRocks</span>
+            <span class="tech-tag">Power BI REST API</span>
+            <span class="tech-tag">Slack API</span>
+            <span class="tech-tag">HTML / CSS / JS</span>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Capabilities</div>
+            <div class="module-item"><div class="module-icon">🚦</div><div class="module-info"><div class="module-name">Refresh Gating</div><div class="module-desc">SQL pre-checks before every Power BI refresh</div></div></div>
+            <div class="module-item"><div class="module-icon">🔁</div><div class="module-info"><div class="module-name">Materializer</div><div class="module-desc">Scheduled rebuild of heavy reporting tables</div></div></div>
+            <div class="module-item"><div class="module-icon">📊</div><div class="module-info"><div class="module-name">Slack Status Board</div><div class="module-desc">Real-time PNG health dashboard</div></div></div>
+            <div class="module-item"><div class="module-icon">🐛</div><div class="module-info"><div class="module-name">Report Tasks</div><div class="module-desc">Auto-filed issues on repeated job failure</div></div></div>
+        </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content">
+
+        <div class="header-section">
+            <div class="page-label">Internal Web Tool</div>
+            <div class="name">Control Center</div>
+            <div class="job-title">A CONTROL PLANE FOR COLLECTIONS REPORTING INFRASTRUCTURE</div>
+            <div class="accent-line"></div>
+        </div>
+
+        <div class="profile-text">
+            A FastAPI + static-frontend web app I designed and built to run the operational backbone behind the team's collections reporting: it gates every Power BI dashboard refresh behind a live SQL health-check suite so nothing refreshes on stale data, runs scheduled "materializer" jobs that rebuild expensive derived tables from refill scripts instead of hitting a heavy live view, and posts a real-time status board to Slack so the team can see the health of every job at a glance — with issues automatically tracked when a job fails repeatedly.
+        </div>
+
+<!-- Problem & Solution -->
+        <div style="margin-bottom: 35px;">
+            <div class="work-title">THE PROBLEM I SOLVED</div>
+            <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+                <div style="flex:1; min-width:220px;">
+                    <div style="background:var(--paper); border-left:4px solid var(--brass); padding:16px 18px; border-radius:0 6px 6px 0; margin-bottom:12px; border-top:1px solid var(--paper-line); border-right:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);">
+                        <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--brass-deep); margin-bottom:8px;">Before</div>
+                        <div style="font-size:12.5px; color:var(--slate); line-height:1.8;">Dashboards refreshed on a timer regardless of whether the underlying data was actually ready — so a late upstream load meant stakeholders saw a dashboard confidently showing yesterday's (or wrong) numbers, with no signal that anything was off. Failures were diagnosed after the fact, by someone noticing something looked wrong.</div>
+                    </div>
+                    <div style="background:var(--paper); border-left:4px solid var(--code-teal); padding:16px 18px; border-radius:0 6px 6px 0; border-top:1px solid var(--paper-line); border-right:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);">
+                        <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--code-teal); margin-bottom:8px;">After</div>
+                        <div style="font-size:12.5px; color:var(--slate); line-height:1.8;">Every refresh runs through a pre-check gate first — if the data isn't ready, the refresh is blocked and logged instead of quietly running on stale numbers. A live Slack status board shows every job's health at a glance, and a job that keeps failing automatically opens a tracked issue instead of relying on someone to notice.</div>
+                    </div>
+                </div>
+                <div style="flex-shrink:0; width:260px;">
+                    <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Live Slack Status Board</div>
+                    <div class="screenshot-placeholder" data-slot="slack-report">
+                        <span>📋 Slack status-report image goes here</span>
+                    </div>
+                    <div style="font-size:11px; color:var(--slate-light); margin-top:6px; font-style:italic;">Auto-generated PNG posted to Slack showing live job health</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div style="margin-bottom: 35px;">
+            <div class="work-title">SYSTEM ARCHITECTURE</div>
+            <div class="arch-flow">
+                <div class="arch-node primary"><span>🕐</span>Scheduler<br>Trigger</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🚦</span>Pre-check<br>Suite</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🗄️</span>SQL Server /<br>StarRocks</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node accent"><span>📊</span>Power BI<br>Refresh</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>💬</span>Slack<br>Status Board</div>
+            </div>
+            <div class="arch-flow">
+                <div class="arch-node"><span>🔁</span>Materializer<br>Job</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>🗄️</span>Refill<br>Script</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node accent"><span>📦</span>Rebuilt<br>Table</div>
+                <div style="flex:1"></div>
+                <div class="arch-node"><span>🐛</span>Repeated<br>Failure</div>
+                <div class="arch-arrow">▶</div>
+                <div class="arch-node"><span>📋</span>Report Task<br>Auto-Filed</div>
+            </div>
+        </div>
+
+        <!-- Website Overview Screenshots -->
+        <div style="margin-bottom: 35px;">
+            <div class="work-title">THE WEB APP</div>
+            <div class="screenshot-placeholder wide" data-slot="overview-1">
+                <span>🖥️ Dashboard / status page screenshot goes here</span>
+            </div>
+        </div>
+
+        <!-- Capability docs -->
+        <div style="margin-bottom: 10px;">
+            <div class="work-title">CAPABILITY DOCUMENTATION</div>
+        </div>
+
+        <!-- 1 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Refresh Gating</div>
+                <div class="module-filename">precheck_gate</div>
+                <div class="module-role">Data-Readiness Layer</div>
+            </div>
+            <div class="module-description">Before any Power BI dashboard refreshes, a suite of SQL health checks runs against the relevant tables — row counts look sane, key checks aren't null, data has actually landed for the expected date. Only if every check passes does the refresh fire; otherwise it's blocked and logged, so a dashboard never silently shows stale or broken numbers.</div>
+            <ul class="feature-list">
+                <li>Each dashboard has its own configurable set of pre-check queries</li>
+                <li>A blocked refresh is logged with exactly which check(s) failed, not just "refresh failed"</li>
+                <li>Runs on a schedule, independent of any one report's own retry logic</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">precheck_gate.py <span>— illustrative pattern, not the real production script</span></div>
+                <pre><code class="language-python">def run_precheck_suite(dashboard_id: str) -> list[CheckResult]:
+    checks = load_checks_for(dashboard_id)     # one SQL query per check
+    results = []
+    for check in checks:
+        try:
+            row = run_query(check.sql, timeout=check.timeout)
+            results.append(CheckResult(check.name, passed=check.evaluate(row)))
+        except Exception as e:
+            results.append(CheckResult(check.name, passed=False, error=str(e)))
+    return results
+
+def refresh_if_ready(dashboard_id: str):
+    results = run_precheck_suite(dashboard_id)
+    if all(r.passed for r in results):
+        trigger_powerbi_refresh(dashboard_id)
+    else:
+        log_blocked_refresh(dashboard_id, [r for r in results if not r.passed])</code></pre>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Materializer</div>
+                <div class="module-filename">materializer_job</div>
+                <div class="module-role">Scheduled Table Rebuild</div>
+            </div>
+            <div class="module-description">Some dashboards depend on a heavy, expensive-to-query view. Instead of hitting that view live on every refresh, a scheduled job periodically runs a "refill" SQL script that rebuilds a physical table from it — so downstream reports read from a fast, pre-computed table instead of recomputing an expensive query on demand. The same pre-check pattern gates whether a materializer run is even attempted.</div>
+            <ul class="feature-list">
+                <li>Refill scripts are just SQL files — adding a new materialized table doesn't require touching the scheduler code</li>
+                <li>Each run's pre-check results are visible on the status board, so a stalled refill is obvious immediately</li>
+                <li>Doubles as a live "is the warehouse connection healthy" canary — if every check suddenly fails at once, that's a connectivity signal, not a data bug</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">materializer_job.py <span>— illustrative pattern, not the real production script</span></div>
+                <pre><code class="language-python">def run_materializer(job: MaterializerJob) -> RunResult:
+    checks = run_precheck_suite(job.dashboard_id)
+    if not all(c.passed for c in checks):
+        return RunResult(status="blocked", checks=checks)
+
+    run_sql_script(job.refill_script_path)      # rebuilds the physical table
+    log_run(job.id, status="completed", checks=checks)
+    post_status_update(job.id)                   # renders the Slack status board
+    return RunResult(status="completed", checks=checks)</code></pre>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Slack Status Board</div>
+                <div class="module-filename">status_board</div>
+                <div class="module-role">Monitoring Dashboard</div>
+            </div>
+            <div class="module-description">Renders a real-time status board as an image and posts it to a Slack channel, so the team can see the health of every job — refreshes, materializer runs, pre-checks — at a glance, without opening a separate tool. Each update replaces the previous message so there's always exactly one current status card.</div>
+            <ul class="feature-list">
+                <li>Colour-coded per job: passing, blocked, and failed states are visually distinct at a glance</li>
+                <li>Made crash-safe so a rendering failure never leaves the board stuck on stale data</li>
+                <li>Rebuilt to post automatically after every scheduled run, not just on a fixed timer</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">status_board.py <span>— illustrative pattern, not the real production script</span></div>
+                <pre><code class="language-python">def post_status_update(job_id: str):
+    board = render_status_image(get_all_job_states())   # one PNG, all jobs
+    try:
+        upload_to_slack(board, channel=STATUS_CHANNEL, replace_previous=True)
+    except Exception as e:
+        log_error("status_board_post_failed", job_id=job_id, error=str(e))
+        # never let a Slack posting failure take down the job itself</code></pre>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="module-section">
+            <div class="module-header">
+                <div class="module-title">Report Tasks</div>
+                <div class="module-filename">report_tasks</div>
+                <div class="module-role">Self-Tracking Reliability Layer</div>
+            </div>
+            <div class="module-description">A lightweight issue tracker built into the tool itself: bugs, investigations, and follow-ups per report. When a linked job — a refresh or a materializer run — fails repeatedly, a task is auto-filed instead of relying on someone noticing the pattern in the status board. It also caught a real bug: a submit-conflict rejection from Power BI was being logged as the final failure reason instead of the actual underlying error, which I found and fixed while building this feature.</div>
+            <ul class="feature-list">
+                <li>Auto-files a task after N consecutive failures on the same job, instead of on the first blip</li>
+                <li>Each task links back to the specific job run and its pre-check results</li>
+                <li>Manual tasks can be filed too — not just auto-generated ones</li>
+            </ul>
+            <div class="code-block">
+                <div class="code-header">report_tasks.py <span>— illustrative pattern, not the real production script</span></div>
+                <pre><code class="language-python">def record_run_result(job_id: str, result: RunResult):
+    save_run_history(job_id, result)
+
+    if result.status == "failed" and consecutive_failures(job_id) >= FAILURE_THRESHOLD:
+        if not has_open_task(job_id):
+            file_task(
+                job_id=job_id,
+                title=f"{job_id} failing repeatedly",
+                detail=result.error,
+                linked_run=result.run_id,
+            )</code></pre>
+            </div>
+        </div>
+
+        <!-- Second screenshot slot -->
+        <div style="margin-bottom: 10px;">
+            <div class="work-title">REPORT TASKS IN ACTION</div>
+            <div class="screenshot-placeholder wide" data-slot="overview-2">
+                <span>🖥️ Report Tasks / status detail screenshot goes here</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>hljs.highlightAll();</script>
+</body>
+</html>
