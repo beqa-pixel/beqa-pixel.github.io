@@ -401,11 +401,9 @@
                     </div>
                 </div>
                 <div style="flex-shrink:0; width:260px;">
-                    <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Live Slack Status Board</div>
-                    <div class="screenshot-placeholder" data-slot="slack-report">
-                        <span>📋 Slack status-report image goes here</span>
-                    </div>
-                    <div style="font-size:11px; color:var(--slate-light); margin-top:6px; font-style:italic;">Auto-generated PNG posted to Slack showing live job health</div>
+                    <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Live Status Board</div>
+                    <img src="report-status.png" alt="Live report status board showing every scheduled report's send status" style="width:100%; border-radius:6px; box-shadow:0 2px 12px rgba(22,33,44,0.12); border:1px solid var(--paper-line);">
+                    <div style="font-size:11px; color:var(--slate-light); margin-top:6px; font-style:italic;">Live production status board — every scheduled job's health at a glance</div>
                 </div>
             </div>
         </div>
@@ -437,12 +435,13 @@
             </div>
         </div>
 
-        <!-- Website Overview Screenshots -->
+        <!-- Website Overview Video -->
         <div style="margin-bottom: 35px;">
-            <div class="work-title">THE WEB APP</div>
-            <div class="screenshot-placeholder wide" data-slot="overview-1">
-                <span>🖥️ Dashboard / status page screenshot goes here</span>
-            </div>
+            <div class="work-title">THE WEB APP, IN ACTION</div>
+            <video controls playsinline preload="metadata" style="width:100%; border-radius:8px; box-shadow:0 2px 16px rgba(22,33,44,0.15); border:1px solid var(--paper-line); background:#000;">
+                <source src="control-center-demo.mp4" type="video/mp4">
+                Your browser doesn't support embedded video. <a href="control-center-demo.mp4">Download the demo</a> instead.
+            </video>
         </div>
 
         <!-- Capability docs -->
@@ -463,6 +462,7 @@
                 <li>A blocked refresh is logged with exactly which check(s) failed, not just "refresh failed"</li>
                 <li>Runs on a schedule, independent of any one report's own retry logic</li>
             </ul>
+            <img src="pbi-status.png" alt="Live Power BI refresh status board" style="width:100%; max-width:520px; border-radius:6px; box-shadow:0 2px 12px rgba(22,33,44,0.1); border:1px solid var(--paper-line); margin-bottom:14px; display:block;">
             <div class="code-block">
                 <div class="code-header">precheck_gate.py <span>— illustrative pattern, not the real production script</span></div>
                 <pre><code class="language-python">def run_precheck_suite(dashboard_id: str) -> list[CheckResult]:
@@ -498,6 +498,7 @@ def refresh_if_ready(dashboard_id: str):
                 <li>Each run's pre-check results are visible on the status board, so a stalled refill is obvious immediately</li>
                 <li>Doubles as a live "is the warehouse connection healthy" canary — if every check suddenly fails at once, that's a connectivity signal, not a data bug</li>
             </ul>
+            <img src="materializer-status.png" alt="Live materializer pre-check and refill status" style="width:100%; max-width:520px; border-radius:6px; box-shadow:0 2px 12px rgba(22,33,44,0.1); border:1px solid var(--paper-line); margin-bottom:14px; display:block;">
             <div class="code-block">
                 <div class="code-header">materializer_job.py <span>— illustrative pattern, not the real production script</span></div>
                 <pre><code class="language-python">def run_materializer(job: MaterializerJob) -> RunResult:
@@ -563,14 +564,6 @@ def refresh_if_ready(dashboard_id: str):
                 detail=result.error,
                 linked_run=result.run_id,
             )</code></pre>
-            </div>
-        </div>
-
-        <!-- Second screenshot slot -->
-        <div style="margin-bottom: 10px;">
-            <div class="work-title">REPORT TASKS IN ACTION</div>
-            <div class="screenshot-placeholder wide" data-slot="overview-2">
-                <span>🖥️ Report Tasks / status detail screenshot goes here</span>
             </div>
         </div>
 
