@@ -300,6 +300,19 @@
             color: var(--code-teal);
         }
 
+        .job-description a {
+            color: var(--code-teal);
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: rgba(76, 122, 115, 0.4);
+            text-underline-offset: 2px;
+        }
+
+        .job-description a:hover {
+            color: var(--brass-deep);
+            text-decoration-color: var(--brass-deep);
+        }
+
         /* Skills Section */
         .skills-section {
             margin-top: 40px;
@@ -871,18 +884,18 @@ alt="Beka Razmadze - Profile Photo">
                 <div class="section-title">Education</div>
                 
                 <div class="education-item">
-                    <div class="education-year">SEPTEMBER 2024 – JUNE 2026</div>
-                    <div class="education-title">MS INFORMATION TECHNOLOGY</div>
-                    <div class="education-school">Ivane Javakhishvili Tbilisi State University</div>
-                    <div class="education-detail"> Focus Areas:<br>• Data Analysis & Big Data Processing<br>• System Analysis & Design<br>• Business Intelligence & Analytics</div>
-                </div>
-
-                <div class="education-item">
                     <div class="education-year">SEPTEMBER 2020 – JULY 2024</div>
                     <div class="education-title">BS ECONOMICS</div>
                     <div class="education-school">Ivane Javakhishvili Tbilisi State University</div>
                     <div class="education-detail">GPA: 3.8 | Specialization: Econometrics & Data Analysis</div>
                     <button class="diploma-button" onclick="openDiplomaModal()">📄 View Diploma</button>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-year">SEPTEMBER 2024 – JUNE 2026</div>
+                    <div class="education-title">MS INFORMATION TECHNOLOGY</div>
+                    <div class="education-school">Ivane Javakhishvili Tbilisi State University</div>
+                    <div class="education-detail"> Focus Areas:<br>• Data Analysis & Big Data Processing<br>• System Analysis & Design<br>• Business Intelligence & Analytics</div>
                 </div>
             </div>
         </div>
@@ -939,8 +952,8 @@ alt="Beka Razmadze - Profile Photo">
                             <div class="job-description">
                                 <ul>
                                     <li><strong>Jan 2024 — Started as Risk Data Analyst:</strong> optimized complex SQL queries, automated daily SSRS reports, and built Power BI dashboards for key risk metrics.</li>
-                                    <li><strong>Jul 2024 — Moved into C-Level Executive Management Reporting Data Analyst:</strong> owned end-to-end delivery of executive reporting, designed and built an automated reporting pipeline (see Python case study), and introduced a live Slack status dashboard for report delivery health.</li>
-                                    <li><strong>Jul 2025 — Now Collection Reporting Team Lead, based in Tashkent, Uzbekistan:</strong> relocated to lead the collections reporting function for TBC Uzbekistan, designed and built Control Center (see case study), and leads and mentors the reporting team.</li>
+                                    <li><strong>Jul 2024 — Moved into C-Level Executive Management Reporting Data Analyst:</strong> owned end-to-end delivery of executive reporting, designed and built an <a href="skills-python.html">automated daily management reporting tool</a>, and introduced a live Slack status dashboard for report delivery health.</li>
+                                    <li><strong>Jul 2025 — Now Collection Reporting Team Lead, based in Tashkent, Uzbekistan:</strong> relocated to lead the collections reporting function for TBC Uzbekistan, designed and built <a href="control-center.html">Control Center</a>, and leads and mentors the reporting team.</li>
                                 </ul>
                             </div>
                         </div>
