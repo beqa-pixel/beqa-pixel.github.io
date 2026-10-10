@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Analysis - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #16212C;
+            --ink-soft: #24333F;
+            --paper: #FBF9F4;
+            --paper-line: #E7E1D2;
+            --slate: #5C6773;
+            --slate-light: #8B94A0;
+            --brass: #AD8A4E;
+            --brass-deep: #8C6D37;
+            --code-teal: #4C7A73;
+            --cream: #EDE7DA;
+            --cream-dim: #B9C3CC;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Public Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--paper);
+            color: var(--slate);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--paper);
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(22, 33, 44, 0.08);
+            overflow: hidden;
+            border: 1px solid var(--paper-line);
+        }
+
+        .header {
+            background: linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+            color: var(--cream);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 3px solid var(--brass);
+        }
+
+        .header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            margin-top: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--cream-dim);
+            letter-spacing: 0.5px;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: var(--brass);
+            border: 1px solid var(--brass);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--brass);
+            color: var(--ink);
+        }
+
+        .content { padding: 40px; }
+
+        .intro {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--slate);
+            max-width: 900px;
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--paper-line);
+            padding-bottom: 10px;
+        }
+
+        .dropdown-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .dropdown-select {
+            width: 100%;
+            max-width: 460px;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-family: inherit;
+            border: 1px solid var(--paper-line);
+            border-radius: 4px;
+            background-color: white;
+            color: var(--ink);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .dropdown-select:hover,
+        .dropdown-select:focus {
+            outline: none;
+            border-color: var(--brass);
+            box-shadow: 0 0 0 3px rgba(173, 138, 78, 0.12);
+        }
+
+        .report-view {
+            margin-top: 30px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 14px;
+            margin-bottom: 10px;
+        }
+
+        .report-head h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--code-teal);
+            border: 1px solid rgba(76, 122, 115, 0.4);
+            border-radius: 4px;
+            padding: 3px 8px;
+        }
+
+        .question {
+            font-size: 15px;
+            color: var(--ink);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .brief {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            max-width: 950px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .panel-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--brass-deep);
+            margin-bottom: 12px;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step;
+        }
+
+        .steps li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 34px;
+            margin-bottom: 12px;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid var(--code-teal);
+            color: var(--code-teal);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .steps li strong { color: var(--ink); }
+
+        .formula {
+            margin-top: 18px;
+            background: rgba(173, 138, 78, 0.08);
+            border-left: 3px solid var(--brass);
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--ink);
+        }
+
+        .formula span {
+            display: block;
+            font-size: 10.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--brass-deep);
+            margin-bottom: 4px;
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--ink);
+            color: var(--cream);
+            padding: 12px 16px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .script-header h3 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-button {
+            padding: 6px 14px;
+            background-color: var(--brass);
+            color: var(--ink);
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .copy-button:hover { background-color: var(--brass-deep); color: white; }
+
+        .code-container {
+            background-color: #1e1e1e;
+            border-radius: 0 0 4px 4px;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            padding: 18px;
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        pre code.hljs { padding: 0; background: transparent; }
+
+        .note {
+            margin-top: 10px;
+            font-size: 11.5px;
+            color: var(--slate-light);
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--paper-line);
+        }
+
+        .nav-btn {
+            padding: 9px 16px;
+            background: white;
+            border: 1px solid var(--paper-line);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--ink);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover { border-color: var(--brass); }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 16px; }
+            .header { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
+            .header h1 { font-size: 24px; }
+            .content { padding: 24px 20px; }
+            .report-head h2 { font-size: 21px; }
+            pre { font-size: 11.5px; padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Risk Analysis</h1>
+                <p>Collections &amp; credit-risk reports — logic and SQL</p>
+            </div>
+            <a href="index.html" class="back-button">← Back to CV</a>
+        </div>
+
+        <div class="content">
+            <p class="intro">
+                These are the collections and credit-risk reports I build and maintain. Pick one to see what question it answers,
+                how the logic works step by step, and a simplified version of the SQL behind it.
+            </p>
+
+            <div class="section-title">Report Logic Showcase</div>
+            <label for="reportSelect" class="dropdown-label">Select a report:</label>
+            <select id="reportSelect" class="dropdown-select"></select>
+
+            <div id="reportView" class="report-view"></div>
+
+            <div class="nav-row">
+                <button class="nav-btn" onclick="step(-1)">← Previous report</button>
+                <button class="nav-btn" onclick="step(1)">Next report →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const REPORTS = [
+    {
+        id: 'vintage',
+        group: 'Recovery & Cohorts',
+        title: 'Collection Vintage',
+        tag: 'Cohort analysis',
+        question: 'Of the loans that fell into a delinquency bucket in a given month, how much did we recover — and how fast?',
+        brief: 'Groups loans into cohorts ("vintages") by the month they first entered a DPD bucket, then follows each cohort for up to 24 months. The result is a matrix: rows are entry months, columns are months since entry, cells are the recovered share.',
+        steps: [
+            '<strong>Find the entry.</strong> For each loan, take the first day it crossed into the bucket (e.g. 91+ DPD). That month is its vintage.',
+            '<strong>Fix the denominator.</strong> The balance on the entry day is the base the cohort is measured against.',
+            '<strong>Follow month by month.</strong> At each month-end after entry, check whether the loan cured to 0 DPD, closed, or is still in the bucket.',
+            '<strong>Accumulate.</strong> Recovered share = balance that exited the bucket ÷ entry balance, cumulative over months 1…24.',
+            '<strong>Slice.</strong> Product, legal entity, segment and fraud type filters apply to the same matrix.'
+        ],
+        formula: 'Recovery %(vintage, m) = Σ balance exited by month m ÷ Σ entry balance',
+        sql: `-- Collection vintage: entry month x months since entry
+WITH entries AS (                       -- first day each loan reached 91+ DPD
+    SELECT loan_id,
+           MIN(snapshot_date)              AS entry_date
+    FROM   loan_daily_snapshot
+    WHERE  dpd >= 91
+    GROUP  BY loan_id
+),
+base AS (
+    SELECT e.loan_id,
+           DATE_TRUNC('month', e.entry_date) AS vintage,
+           s.principal_balance                AS entry_balance
+    FROM   entries e
+    JOIN   loan_daily_snapshot s
+           ON s.loan_id = e.loan_id AND s.snapshot_date = e.entry_date
+),
+tracked AS (                            -- status at each month-end after entry
+    SELECT b.vintage,
+           b.loan_id,
+           b.entry_balance,
+           TIMESTAMPDIFF(MONTH, b.vintage, m.snapshot_date) AS months_since,
+           CASE WHEN m.dpd = 0 OR m.is_closed = 1 THEN 1 ELSE 0 END AS exited
+    FROM   base b
+    JOIN   loan_month_end m ON m.loan_id = b.loan_id
+                           AND m.snapshot_date > b.vintage
+)
+SELECT vintage,
+       months_since,
+       SUM(CASE WHEN exited = 1 THEN entry_balance ELSE 0 END)
+         / SUM(entry_balance)            AS recovery_rate
+FROM   tracked
+WHERE  months_since BETWEEN 1 AND 24
+GROUP  BY vintage, months_since
+ORDER  BY vintage, months_since;`
+    },
+    {
+        id: 'cash',
+        group: 'Recovery & Cohorts',
+        title: 'Cash Recovery (Matured Vintage)',
+        tag: 'Cash-based recovery',
+        question: 'How much real cash did we collect from loans after they defaulted?',
+        brief: 'A balance-exit view counts a cured loan at its full balance, even if the client paid only a small part. This report counts only the principal actually paid. Payments go into 30-day windows after the default date, and the total is capped at the defaulted balance.',
+        steps: [
+            '<strong>First default only.</strong> Each loan enters once, on its first-ever day at 91+ DPD. A loan that cures and defaults again stays in its first cohort, so payments are never counted twice.',
+            '<strong>Window the payments.</strong> Every payment after default goes into window 1, 2, 3 … based on days since default ÷ 30.',
+            '<strong>Accumulate and cap.</strong> Cumulative cash per loan can never exceed the principal at default.',
+            '<strong>Divide.</strong> Cumulative capped cash ÷ principal at default = cash recovery rate per window.'
+        ],
+        formula: 'Cash recovery %(w) = Σ MIN(cumulative principal paid ≤ w, principal at default) ÷ Σ principal at default',
+        sql: `-- Cash recovery in 30-day windows after first default, capped at default balance
+WITH first_default AS (
+    SELECT loan_id,
+           MIN(snapshot_date) AS default_date
+    FROM   loan_daily_snapshot
+    WHERE  dpd >= 91
+    GROUP  BY loan_id
+),
+defaulted AS (
+    SELECT f.loan_id, f.default_date, s.principal_balance AS default_principal
+    FROM   first_default f
+    JOIN   loan_daily_snapshot s
+           ON s.loan_id = f.loan_id AND s.snapshot_date = f.default_date
+),
+windowed AS (
+    SELECT d.loan_id,
+           d.default_principal,
+           FLOOR(DATEDIFF(p.payment_date, d.default_date) / 30) + 1 AS window_no,
+           SUM(p.principal_paid)                                     AS paid
+    FROM   defaulted d
+    JOIN   payments p
+           ON p.loan_id = d.loan_id AND p.payment_date > d.default_date
+    GROUP  BY d.loan_id, d.default_principal, window_no
+),
+cumulative AS (
+    SELECT loan_id, default_principal, window_no,
+           LEAST(SUM(paid) OVER (PARTITION BY loan_id ORDER BY window_no),
+                 default_principal) AS cum_paid_capped
+    FROM   windowed
+)
+SELECT window_no,
+       SUM(cum_paid_capped) / (SELECT SUM(default_principal) FROM defaulted) AS cash_recovery_rate
+FROM   cumulative
+WHERE  window_no <= 24
+GROUP  BY window_no
+ORDER  BY window_no;
+-- (simplified: a full version carries each loan's last cumulative value
+--  forward into windows where it had no payment)`
+    },
+    {
+        id: 'court',
+        group: 'Recovery & Cohorts',
+        title: 'Litigation & Court Vintage',
+        tag: 'Legal collections',
+        question: 'Once a loan goes to court, how long until it is resolved — and how much do we get back?',
+        brief: 'Litigated loans are grouped by the month they were sent to court, then tracked through court stages until closure, with the balance and payments recorded at each step.',
+        steps: [
+            '<strong>Cohort by litigation month.</strong> The month a loan was handed to legal is its vintage.',
+            '<strong>Track the stage.</strong> At every month-end, record its court stage (filed → decision → enforcement → closed).',
+            '<strong>Measure outcome.</strong> Count closed loans and cumulative payments per cohort and month since litigation.',
+            '<strong>Watch the calendar.</strong> Month-end litigation dates must land in the right cohort, a classic off-by-one-month trap.'
+        ],
+        formula: 'Closed share(v, m) = loans closed by month m ÷ loans litigated in month v',
+        sql: `-- Litigation cohorts: closure share by months since litigation
+WITH lit AS (
+    SELECT loan_id,
+           DATE_TRUNC('month', litigation_date) AS lit_vintage,   -- not EOMONTH(date + 1)!
+           closed_date
+    FROM   litigation_cases
+),
+grid AS (
+    SELECT l.lit_vintage, l.loan_id, l.closed_date, c.month_start
+    FROM   lit l
+    JOIN   calendar_months c ON c.month_start >= l.lit_vintage
+                            AND c.month_start <= CURRENT_DATE
+)
+SELECT lit_vintage,
+       TIMESTAMPDIFF(MONTH, lit_vintage, month_start)       AS months_since,
+       COUNT(*)                                             AS loans,
+       SUM(CASE WHEN closed_date < month_start + INTERVAL 1 MONTH
+                THEN 1 ELSE 0 END) / COUNT(*)               AS closed_share
+FROM   grid
+GROUP  BY lit_vintage, months_since
+ORDER  BY lit_vintage, months_since;`
+    },
+    {
+        id: 'rollrate',
+        group: 'Portfolio Quality',
+        title: 'Roll Rates (Bucket Migration)',
+        tag: 'Migration matrix',
+        question: 'What share of each DPD bucket moved to a worse bucket, stayed, or cured this month?',
+        brief: 'Compares each loan\'s DPD bucket at last month-end with this month-end. The result is a from → to matrix: forward rolls show worsening, backward rolls show cures.',
+        steps: [
+            '<strong>Two snapshots.</strong> Take every loan\'s bucket at the previous and the current month-end.',
+            '<strong>Pair them.</strong> One row per loan: from_bucket → to_bucket. New loans and closed loans get their own states.',
+            '<strong>Weight by balance.</strong> Sum the balance at the start of the month for each pair.',
+            '<strong>Normalise rows.</strong> Divide by the from-bucket total, so each row adds up to 100%.'
+        ],
+        formula: 'Roll rate(from → to) = balance moving from → to ÷ total balance in "from"',
+        sql: `-- Month-over-month bucket migration matrix (balance-weighted)
+WITH b AS (
+    SELECT loan_id, snapshot_date, principal_balance,
+           CASE WHEN dpd = 0   THEN '0'
+                WHEN dpd <= 30 THEN '1-30'
+                WHEN dpd <= 60 THEN '31-60'
+                WHEN dpd <= 90 THEN '61-90'
+                ELSE '90+' END AS bucket
+    FROM   loan_month_end
+),
+pairs AS (
+    SELECT p.bucket                        AS from_bucket,
+           COALESCE(c.bucket, 'Closed')    AS to_bucket,
+           p.principal_balance             AS start_balance
+    FROM   b p
+    LEFT JOIN b c
+           ON c.loan_id = p.loan_id
+          AND c.snapshot_date = LAST_DAY(p.snapshot_date + INTERVAL 1 DAY)
+    WHERE  p.snapshot_date = '2026-08-31'
+)
+SELECT from_bucket, to_bucket,
+       SUM(start_balance)
+         / SUM(SUM(start_balance)) OVER (PARTITION BY from_bucket) AS roll_rate
+FROM   pairs
+GROUP  BY from_bucket, to_bucket
+ORDER  BY from_bucket, to_bucket;`
+    },
+    {
+        id: 'portfolio',
+        group: 'Portfolio Quality',
+        title: 'Portfolio Report',
+        tag: 'Portfolio + collections',
+        question: 'What does the overdue portfolio look like this month, and what did collections do on it?',
+        brief: 'A monthly snapshot of every loan (product, bucket, segment, region, write-off and litigation status), with collection activity added on top: contacts, promises to pay, payments and letters. It is pre-aggregated, so the dashboard stays fast.',
+        steps: [
+            '<strong>Snapshot.</strong> Take every active loan at month-end with all its attributes.',
+            '<strong>Join activity.</strong> Add right-party contacts, promises to pay, payments and enforcement flags per loan for that month.',
+            '<strong>Aggregate.</strong> Group identical attribute combinations into one row with a loan count and summed overdue days.',
+            '<strong>Correct averages.</strong> Average DPD = Σ overdue days ÷ Σ loans, never an average of averages.'
+        ],
+        formula: 'Avg DPD = Σ overdue_days ÷ Σ loan_count     Contact rate = loans with RPC ÷ overdue loans',
+        sql: `-- Monthly portfolio snapshot with collection activity, pre-aggregated
+WITH snap AS (
+    SELECT l.loan_id, l.product, l.region, l.score_segment, l.dpd,
+           CASE WHEN l.dpd = 0 THEN '0' WHEN l.dpd <= 30 THEN '1-30'
+                WHEN l.dpd <= 90 THEN '31-90' ELSE '90+' END AS bucket,
+           l.principal_balance
+    FROM   loan_month_end l
+    WHERE  l.snapshot_date = '2026-09-30'
+),
+activity AS (
+    SELECT loan_id,
+           MAX(CASE WHEN result = 'RPC' THEN 1 ELSE 0 END) AS has_rpc,
+           MAX(CASE WHEN result = 'PTP' THEN 1 ELSE 0 END) AS has_ptp
+    FROM   contact_history
+    WHERE  contact_date BETWEEN '2026-09-01' AND '2026-09-30'
+    GROUP  BY loan_id
+)
+SELECT s.product, s.region, s.score_segment, s.bucket,
+       COUNT(*)                      AS loan_count,
+       SUM(s.dpd)                    AS overdue_days,      -- avg DPD = overdue_days / loan_count
+       SUM(s.principal_balance)      AS balance,
+       SUM(COALESCE(a.has_rpc, 0))   AS loans_contacted,
+       SUM(COALESCE(a.has_ptp, 0))   AS loans_promised
+FROM   snap s
+LEFT JOIN activity a ON a.loan_id = s.loan_id
+GROUP  BY s.product, s.region, s.score_segment, s.bucket;`
+    },
+    {
+        id: 'schedule',
+        group: 'Portfolio Quality',
+        title: 'Schedule Flow (Payment Behaviour)',
+        tag: 'Early delinquency',
+        question: 'When an installment falls due, do clients pay on time, a few days late, or not at all?',
+        brief: 'For every installment due in a month, classifies how the client paid: on time, or how many days late they cured (1–3, 4–15, 16–30, not cured). This is the earliest warning sign that payment discipline is changing.',
+        steps: [
+            '<strong>Due installments.</strong> Take every scheduled installment with a due date in the month.',
+            '<strong>Find the cure day.</strong> The first day after the due date when the loan is back at 0 DPD.',
+            '<strong>Bucket the delay.</strong> 0 days = on time; otherwise 1–3 / 4–15 / 16–30 / 30+ days late.',
+            '<strong>Compare cohorts.</strong> The share of each delay bucket per due month and product shows the trend.'
+        ],
+        formula: 'On-time rate = installments paid by due date ÷ installments due',
+        sql: `-- Payment behaviour per due installment
+WITH due AS (
+    SELECT loan_id, due_date, product
+    FROM   repayment_schedule
+    WHERE  due_date BETWEEN '2026-09-01' AND '2026-09-30'
+),
+cure AS (
+    SELECT d.loan_id, d.due_date, d.product,
+           MIN(s.snapshot_date) AS cured_on          -- first day back at 0 DPD
+    FROM   due d
+    LEFT JOIN loan_daily_snapshot s
+           ON s.loan_id = d.loan_id
+          AND s.snapshot_date >= d.due_date
+          AND s.dpd = 0
+    GROUP  BY d.loan_id, d.due_date, d.product
+)
+SELECT product,
+       CASE WHEN cured_on IS NULL                      THEN 'not cured'
+            WHEN DATEDIFF(cured_on, due_date) = 0      THEN 'on time'
+            WHEN DATEDIFF(cured_on, due_date) <= 3     THEN '1-3 days'
+            WHEN DATEDIFF(cured_on, due_date) <= 15    THEN '4-15 days'
+            WHEN DATEDIFF(cured_on, due_date) <= 30    THEN '16-30 days'
+            ELSE '30+ days' END                        AS delay_bucket,
+       COUNT(*)                                        AS installments
+FROM   cure
+GROUP  BY product, delay_bucket;`
+    },
+    {
+        id: 'ac',
+        group: 'Payments',
+        title: 'Auto Collection Share',
+        tag: 'Payment attribution',
+        question: 'Which channel did each repayment come through, and how much is collected automatically?',
+        brief: 'Classifies every loan repayment by channel: a direct payment by the client, or an automatic debit (card auto-debit, banking app, payment systems, litigation enforcement). The trend in the automatic share shows how well auto-debit is working.',
+        steps: [
+            '<strong>Collect payments.</strong> Take every repayment transaction with its loan, amount and timestamp.',
+            '<strong>Match the channel.</strong> Map the account or transaction type to a channel through a mapping table. Anything unmatched is a direct payment.',
+            '<strong>Tag DPD.</strong> Add the loan\'s DPD bucket on the payment day, so auto-collection is measured per bucket.',
+            '<strong>Share.</strong> Auto share = automatic amount ÷ total repaid, per day, product and bucket.'
+        ],
+        formula: 'AC share = Σ amount via automatic channels ÷ Σ total repayment amount',
+        sql: `-- Repayment attribution by channel and DPD bucket
+WITH p AS (
+    SELECT t.payment_id, t.loan_id, t.amount,
+           CAST(t.paid_at AS DATE)                 AS pay_date,
+           COALESCE(m.channel, 'Direct')           AS channel,
+           COALESCE(m.is_automatic, 0)             AS is_auto
+    FROM   repayments t
+    LEFT JOIN channel_mapping m
+           ON m.source_account = t.source_account
+)
+SELECT p.pay_date,
+       CASE WHEN s.dpd = 0 THEN '0' WHEN s.dpd <= 30 THEN '1-30'
+            WHEN s.dpd <= 90 THEN '31-90' ELSE '90+' END     AS bucket,
+       SUM(p.amount)                                         AS total_repaid,
+       SUM(CASE WHEN p.is_auto = 1 THEN p.amount ELSE 0 END) AS auto_repaid,
+       SUM(CASE WHEN p.is_auto = 1 THEN p.amount ELSE 0 END)
+         / SUM(p.amount)                                     AS ac_share
+FROM   p
+JOIN   loan_daily_snapshot s
+       ON s.loan_id = p.loan_id AND s.snapshot_date = p.pay_date - INTERVAL 1 DAY
+GROUP  BY p.pay_date, bucket;`
+    },
+    {
+        id: 'agency',
+        group: 'Payments',
+        title: 'External Agency Recovery',
+        tag: 'Outsourcing',
+        question: 'How much did each external collection agency recover on the loans we handed over?',
+        brief: 'Keeps a registry of loans transferred to external debt-collection agencies, including the transfer date and the balance at transfer. Payments made after the transfer date are credited to that agency, and an in-house control group is the benchmark.',
+        steps: [
+            '<strong>Registry.</strong> One row per loan and transfer: agency, transfer date, recall date, balance at transfer.',
+            '<strong>Attribute payments.</strong> Only payments between the transfer and recall dates count for that agency.',
+            '<strong>Compare.</strong> Recovery rate per agency vs the in-house control group with a similar DPD profile.'
+        ],
+        formula: 'Agency recovery % = payments during assignment ÷ balance at transfer',
+        sql: `-- Recovery per agency during the assignment window
+SELECT r.agency,
+       DATE_TRUNC('month', r.transfer_date)          AS transfer_month,
+       COUNT(DISTINCT r.loan_id)                     AS loans,
+       SUM(r.balance_at_transfer)                    AS transferred_balance,
+       SUM(COALESCE(p.paid, 0))                      AS recovered,
+       SUM(COALESCE(p.paid, 0)) / SUM(r.balance_at_transfer) AS recovery_rate
+FROM   agency_registry r
+LEFT JOIN (
+    SELECT r2.loan_id, r2.transfer_date, SUM(pm.amount) AS paid
+    FROM   agency_registry r2
+    JOIN   payments pm
+           ON pm.loan_id = r2.loan_id
+          AND pm.payment_date >= r2.transfer_date
+          AND pm.payment_date <  COALESCE(r2.recall_date, CURRENT_DATE + INTERVAL 1 DAY)
+    GROUP  BY r2.loan_id, r2.transfer_date
+) p ON p.loan_id = r.loan_id AND p.transfer_date = r.transfer_date
+GROUP  BY r.agency, transfer_month;`
+    },
+    {
+        id: 'efficiency',
+        group: 'Collections Operations',
+        title: 'Agent Efficiency & Payment Attribution',
+        tag: 'Agent performance',
+        question: 'Which collection agent should get credit for a payment, and how efficient is each team?',
+        brief: 'A payment is credited to the agent whose last successful contact (a promise to pay or a right-party contact) came before it, within an attribution window. Efficiency then compares the amount collected per agent with the overdue balance they worked.',
+        steps: [
+            '<strong>Contacts.</strong> Take every right-party contact or promise to pay with its agent and timestamp.',
+            '<strong>Last touch wins.</strong> For each payment, find the latest qualifying contact on that loan within N days before it.',
+            '<strong>Credit.</strong> The payment amount goes to that agent. Payments with no qualifying contact count as self-cure.',
+            '<strong>Efficiency.</strong> Collected ÷ overdue balance assigned, compared with the same day of previous months.'
+        ],
+        formula: 'Agent efficiency = Σ attributed payments ÷ Σ assigned overdue balance',
+        sql: `-- Last-touch attribution of payments to agents (7-day window)
+WITH candidates AS (
+    SELECT p.payment_id, p.loan_id, p.amount, p.paid_at,
+           c.agent_id, c.contact_at,
+           ROW_NUMBER() OVER (PARTITION BY p.payment_id
+                              ORDER BY c.contact_at DESC) AS rn
+    FROM   payments p
+    JOIN   contact_history c
+           ON c.loan_id = p.loan_id
+          AND c.result IN ('PTP', 'RPC')
+          AND c.contact_at <= p.paid_at
+          AND c.contact_at >  p.paid_at - INTERVAL 7 DAY
+)
+SELECT agent_id,
+       COUNT(*)      AS payments_credited,
+       SUM(amount)   AS amount_credited
+FROM   candidates
+WHERE  rn = 1
+GROUP  BY agent_id
+ORDER  BY amount_credited DESC;`
+    },
+    {
+        id: 'queue',
+        group: 'Collections Operations',
+        title: 'Dialer Queue Statistics',
+        tag: 'Call center',
+        question: 'How well are our outbound call queues performing — human and AI agents alike?',
+        brief: 'For each day, queue, product and DPD bucket: dial attempts, answer rate, right-party contact rate, talk-time buckets and drop rate. AI-voice queues and human queues are classified separately, so the two can be compared fairly.',
+        steps: [
+            '<strong>Attempts.</strong> One row per dial attempt with queue, outcome and talk time.',
+            '<strong>Classify.</strong> Mark each queue as AI or human by its naming and configuration rules, and keep the rule current when queues are renamed.',
+            '<strong>Contact quality.</strong> Join the contact result (right party, third party, no contact) to each answered call.',
+            '<strong>Rates.</strong> Answer rate, RPC rate and drop rate per queue/day, with attempt-order breakdown (1st, 2nd, 3rd…).'
+        ],
+        formula: 'Answer rate = answered ÷ attempts     RPC rate = right-party contacts ÷ answered',
+        sql: `-- Daily queue KPIs, AI vs human
+SELECT CAST(a.dialed_at AS DATE)                                  AS call_date,
+       a.queue_name,
+       CASE WHEN q.is_ai_queue = 1 THEN 'AI' ELSE 'Human' END     AS agent_type,
+       COUNT(*)                                                   AS attempts,
+       SUM(CASE WHEN a.answered = 1 THEN 1 ELSE 0 END)            AS answered,
+       SUM(CASE WHEN r.result = 'RPC' THEN 1 ELSE 0 END)          AS rpc,
+       SUM(CASE WHEN a.answered = 1 THEN 1 ELSE 0 END) / COUNT(*) AS answer_rate,
+       SUM(CASE WHEN r.result = 'RPC' THEN 1 ELSE 0 END)
+         / NULLIF(SUM(CASE WHEN a.answered = 1 THEN 1 ELSE 0 END), 0) AS rpc_rate,
+       AVG(CASE WHEN a.answered = 1 THEN a.talk_seconds END)      AS avg_talk_sec
+FROM   dial_attempts a
+JOIN   queue_config q          ON q.queue_name = a.queue_name
+LEFT JOIN contact_results r    ON r.attempt_id = a.attempt_id
+GROUP  BY call_date, a.queue_name, agent_type;`
+    },
+    {
+        id: 'target',
+        group: 'Collections Operations',
+        title: 'Collection Target vs Achievement',
+        tag: 'Monthly KPI',
+        question: 'Did each DPD bucket and product stay within its monthly target?',
+        brief: 'Compares month-end actuals (for example, the overdue share per bucket and product) with targets set by management. A target is a ceiling, so an actual above the target is flagged red.',
+        steps: [
+            '<strong>Actuals.</strong> Overdue balance share per bucket × product at month-end.',
+            '<strong>Targets.</strong> Load the agreed ceiling for each cell.',
+            '<strong>Compare.</strong> Gap = actual − target; above target = bad, with no tolerance band.'
+        ],
+        formula: 'Status = RED if Actual > Target, else GREEN',
+        sql: `-- Month-end actual vs target, per bucket and product
+WITH actual AS (
+    SELECT product, bucket,
+           SUM(principal_balance)
+             / SUM(SUM(principal_balance)) OVER (PARTITION BY product) AS actual_share
+    FROM   loan_month_end_bucketed
+    WHERE  snapshot_date = '2026-09-30'
+    GROUP  BY product, bucket
+)
+SELECT a.product, a.bucket,
+       a.actual_share,
+       t.target_share,
+       a.actual_share - t.target_share                         AS gap,
+       CASE WHEN a.actual_share > t.target_share
+            THEN 'RED' ELSE 'GREEN' END                        AS status
+FROM   actual a
+JOIN   monthly_targets t
+       ON t.product = a.product AND t.bucket = a.bucket AND t.month = '2026-09-01'
+ORDER  BY a.product, a.bucket;`
+    },
+    {
+        id: 'bonus',
+        group: 'Collections Operations',
+        title: 'Collections Bonus Calculation',
+        tag: 'Incentives',
+        question: 'How much bonus does each collection agent earn this month?',
+        brief: 'A multi-step pipeline turns attributed payments and KPIs into a payout for each agent. I audited the whole chain and documented it end to end, and found real calculation bugs along the way. The SQL shows the general pattern (weighted KPI scores) in simplified form.',
+        steps: [
+            '<strong>Attributed results.</strong> Payments credited per agent (see Agent Efficiency).',
+            '<strong>KPI scores.</strong> Each KPI (collected amount, cure rate, contact quality) is scored against its threshold.',
+            '<strong>Weight &amp; cap.</strong> Score = Σ weight × KPI achievement, with a cap on over-achievement.',
+            '<strong>Payout.</strong> Bonus = score × the agent\'s base bonus amount, ranked on a live leaderboard.'
+        ],
+        formula: 'Bonus = base × Σ (weight_k × MIN(achievement_k, cap_k))',
+        sql: `-- Weighted KPI score -> bonus
+WITH kpi AS (
+    SELECT agent_id, kpi_name,
+           actual_value / NULLIF(target_value, 0) AS achievement
+    FROM   agent_kpi_month
+    WHERE  month = '2026-09-01'
+)
+SELECT k.agent_id,
+       SUM(w.weight * LEAST(k.achievement, w.cap))        AS score,
+       a.base_bonus * SUM(w.weight * LEAST(k.achievement, w.cap)) AS bonus,
+       RANK() OVER (ORDER BY SUM(w.weight * LEAST(k.achievement, w.cap)) DESC) AS ranking
+FROM   kpi k
+JOIN   kpi_weights w  ON w.kpi_name = k.kpi_name
+JOIN   agents a       ON a.agent_id = k.agent_id
+GROUP  BY k.agent_id, a.base_bonus;`
+    },
+    {
+        id: 'welcome',
+        group: 'Fraud & Early Warning',
+        title: 'Welcome Call (Antifraud)',
+        tag: 'Fraud prevention',
+        question: 'Which newly issued loans should get a verification call in the first days?',
+        brief: 'Every recently disbursed loan is checked against an antifraud score threshold set for its risk segment. Loans above the threshold are flagged for a welcome or verification call before the first payment is due.',
+        steps: [
+            '<strong>New loans.</strong> Take loans issued in the last few days.',
+            '<strong>Score.</strong> Join the antifraud model score and the client\'s risk segment.',
+            '<strong>Threshold per segment.</strong> Each risk segment (A–F) has its own score cut-off.',
+            '<strong>Flag.</strong> CallMark = 1 when score ≥ threshold; the list feeds the call-center queue.'
+        ],
+        formula: 'CallMark = 1 if antifraud_score ≥ threshold(segment)',
+        sql: `-- Flag new loans for a welcome / verification call
+SELECT l.loan_id,
+       l.disbursed_on,
+       l.risk_segment,
+       f.antifraud_score,
+       t.threshold,
+       CASE WHEN f.antifraud_score >= t.threshold THEN 1 ELSE 0 END AS call_mark
+FROM   loans l
+JOIN   antifraud_scores f      ON f.application_id = l.application_id
+JOIN   segment_thresholds t    ON t.risk_segment   = l.risk_segment
+WHERE  l.disbursed_on >= CURRENT_DATE - INTERVAL 4 DAY;`
+    },
+    {
+        id: 'ews',
+        group: 'Fraud & Early Warning',
+        title: 'Early Warning System (EWS)',
+        tag: 'Rule engine',
+        question: 'Which loans show early signs of fraud or credit deterioration before they default?',
+        brief: '18 automated rules run against the loan portfolio every week, for example a first payment missed, several loans taken in a short time, or a sudden DPD jump. Triggered loans go to Slack, and each one automatically gets a Jira ticket for follow-up.',
+        steps: [
+            '<strong>Rules as SQL.</strong> Each rule is a query returning loans that meet its condition.',
+            '<strong>Run weekly.</strong> All rules run together; results are unioned with a rule id.',
+            '<strong>De-duplicate.</strong> A loan already flagged by the same rule is not raised again.',
+            '<strong>Alert.</strong> New hits are posted to Slack, and each one gets a ticket for an analyst to review.'
+        ],
+        formula: 'Alert = rule condition met AND not already open for (loan, rule)',
+        sql: `-- Two example EWS rules, unioned, minus already-open alerts
+WITH hits AS (
+    -- Rule 01: first payment default (missed first installment by 30+ days)
+    SELECT loan_id, 'R01_FPD30' AS rule_id
+    FROM   loans
+    WHERE  first_due_date <= CURRENT_DATE - INTERVAL 30 DAY
+      AND  first_installment_paid = 0
+    UNION ALL
+    -- Rule 02: stacking - 3+ loans by the same client within 14 days
+    SELECT l.loan_id, 'R02_STACKING'
+    FROM   loans l
+    JOIN  (SELECT client_id
+           FROM   loans
+           WHERE  disbursed_on >= CURRENT_DATE - INTERVAL 14 DAY
+           GROUP  BY client_id
+           HAVING COUNT(*) >= 3) s ON s.client_id = l.client_id
+    WHERE  l.disbursed_on >= CURRENT_DATE - INTERVAL 14 DAY
+)
+SELECT h.loan_id, h.rule_id
+FROM   hits h
+LEFT JOIN ews_alerts a
+       ON a.loan_id = h.loan_id AND a.rule_id = h.rule_id AND a.status = 'OPEN'
+WHERE  a.loan_id IS NULL;`
+    }
+    ];
+
+    const select = document.getElementById('reportSelect');
+    const view = document.getElementById('reportView');
+
+    (function buildSelect() {
+        const groups = {};
+        REPORTS.forEach(r => { (groups[r.group] = groups[r.group] || []).push(r); });
+        Object.entries(groups).forEach(([g, items]) => {
+            const og = document.createElement('optgroup');
+            og.label = g;
+            items.forEach(r => {
+                const o = document.createElement('option');
+                o.value = r.id;
+                o.textContent = r.title;
+                og.appendChild(o);
+            });
+            select.appendChild(og);
+        });
+    })();
+
+    function esc(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function render(id) {
+        const r = REPORTS.find(x => x.id === id) || REPORTS[0];
+        select.value = r.id;
+        view.innerHTML = `
+            <div class="report-head">
+                <h2>${r.title}</h2>
+                <span class="tag">${r.tag}</span>
+            </div>
+            <div class="question">“${r.question}”</div>
+            <p class="brief">${r.brief}</p>
+            <div class="grid">
+                <div>
+                    <div class="panel-title">How the logic works</div>
+                    <ol class="steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+                    <div class="formula"><span>Key formula</span>${esc(r.formula)}</div>
+                </div>
+                <div>
+                    <div class="panel-title">Simplified SQL</div>
+                    <div class="script-header">
+                        <h3>${r.id}.sql</h3>
+                        <button class="copy-button" onclick="copySql(this)">📋 Copy</button>
+                    </div>
+                    <div class="code-container"><pre><code class="language-sql">${esc(r.sql)}</code></pre></div>
+                    <p class="note">Illustrative only: simplified logic with generic table names, not the production code.</p>
+                </div>
+            </div>`;
+        view.style.animation = 'none';
+        void view.offsetWidth;
+        view.style.animation = '';
+        if (window.hljs) view.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+        try { history.replaceState(null, '', '#' + r.id); } catch (e) {}
+    }
+
+    function step(d) {
+        const i = REPORTS.findIndex(x => x.id === select.value);
+        render(REPORTS[(i + d + REPORTS.length) % REPORTS.length].id);
+        view.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copySql(btn) {
+        const r = REPORTS.find(x => x.id === select.value);
+        navigator.clipboard.writeText(r.sql).then(() => {
+            btn.textContent = '✓ Copied';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 1500);
+        }).catch(() => {});
+    }
+
+    select.addEventListener('change', e => render(e.target.value));
+    render(location.hash.slice(1) || 'vintage');
+    </script>
+</body>
+</html>

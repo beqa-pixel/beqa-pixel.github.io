@@ -6,7 +6,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Collection Reporting Team Lead - Portfolio</title>
+    <title>Beka Razmadze — Data Analytics &amp; Collections Reporting Team Lead</title>
+    <meta name="description" content="Beka Razmadze — Data Analytics and Collections Reporting Team Lead at TBC Bank Uzbekistan. SQL, Python (pandas), Power BI (DAX, Power Query), ETL data pipelines, StarRocks, credit-risk and portfolio analytics.">
+    <meta name="keywords" content="Data Analyst, Data Analytics, Business Intelligence, SQL, T-SQL, Python, pandas, Power BI, DAX, Power Query, Excel, ETL, Data Pipelines, StarRocks, SQL Server, SSRS, Data Modeling, Data Quality, KPI Reporting, Credit Risk, Collections, Cohort Analysis, Team Lead">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":"Beka Razmadze","jobTitle":"Collection Reporting Team Lead","url":"https://beqa-pixel.github.io/","address":{"@type":"PostalAddress","addressLocality":"Tashkent","addressCountry":"UZ"},"worksFor":{"@type":"Organization","name":"Space International (TBC Uzbekistan)"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Ivane Javakhishvili Tbilisi State University"},"knowsAbout":["SQL","T-SQL","Python","pandas","Power BI","DAX","Power Query","Excel","ETL","Data Pipelines","StarRocks","SQL Server","SSRS","Data Modeling","Data Quality","Statistical Analysis","Cohort Analysis","Credit Risk","Collections Analytics","Fraud Detection"],"sameAs":["https://www.linkedin.com/in/beqa-razmadze-03769a212/"]}
+    </script>
     <style>
         :root {
             --ink: #16212C;
@@ -559,6 +564,450 @@
     }
 }
 
+/* ── Grouped skill chips ── */
+.skill-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px 28px;
+    margin-top: 18px;
+}
+
+.skill-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill-group-label {
+    width: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--brass-deep);
+    margin-bottom: 2px;
+}
+
+.skill-chip {
+    font-size: 11.5px;
+    color: var(--ink);
+    background: #F8F6F0;
+    border: 1px solid var(--paper-line);
+    border-radius: 999px;
+    padding: 3px 10px;
+}
+
+/* ── Contact extras: notes + QR codes ── */
+.contact-note {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    color: var(--brass);
+    margin-top: 1px;
+}
+
+.qr-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 6px 0 18px;
+}
+
+.qr-card {
+    flex: 1;
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.qr-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid rgba(173, 138, 78, 0.6);
+    background: #fff;
+    transition: transform 0.2s ease;
+}
+
+.qr-card:hover img { transform: scale(1.04); }
+
+.qr-card span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+}
+
+@media print {
+    .contact-note { color: var(--brass-deep) !important; }
+    .qr-card span { color: var(--slate) !important; }
+}
+
+/* ── Career journey (route strip + timeline) ── */
+.journey {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 6px 0 22px;
+    padding: 14px 18px;
+    background: #F8F6F0;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+}
+
+.journey-stop {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.journey-stop.end {
+    text-align: right;
+}
+
+.journey-city {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.journey-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--slate);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.journey-route {
+    flex: 1;
+    position: relative;
+    height: 22px;
+    min-width: 60px;
+}
+
+.journey-route::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-top: 2px dashed var(--brass);
+}
+
+.journey-route .dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--brass);
+}
+
+.journey-route .dot.a { left: -2px; }
+.journey-route .dot.b { right: -2px; background: var(--brass); }
+
+.journey-route .plane {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #F8F6F0;
+    padding: 0 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--brass-deep);
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(var(--brass), var(--paper-line));
+}
+
+.tl-item {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 20px;
+}
+
+.tl-item:last-child {
+    margin-bottom: 0;
+}
+
+.tl-node {
+    position: absolute;
+    left: 2px;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--code-teal);
+    box-sizing: border-box;
+}
+
+.tl-item.current .tl-node {
+    background: var(--brass);
+    border-color: var(--brass);
+    box-shadow: 0 0 0 4px rgba(173, 138, 78, 0.22);
+}
+
+.tl-item.milestone .tl-node {
+    left: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-color: var(--slate-light);
+}
+
+.tl-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    margin-bottom: 4px;
+}
+
+.tl-role {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 13px;
+}
+
+.tl-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--brass-deep);
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.tl-place {
+    display: inline-block;
+    margin-left: 4px;
+    text-transform: none;
+    font-weight: 400;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    color: var(--code-teal);
+    border: 1px solid rgba(76, 122, 115, 0.35);
+    border-radius: 999px;
+    padding: 1px 8px;
+    white-space: nowrap;
+}
+
+.tl-item.current .tl-place {
+    color: var(--brass-deep);
+    border-color: rgba(173, 138, 78, 0.5);
+    background: rgba(173, 138, 78, 0.08);
+}
+
+.tl-body {
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.6;
+}
+
+.tl-body a {
+    color: var(--code-teal);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(76, 122, 115, 0.4);
+    text-underline-offset: 2px;
+}
+
+.tl-relocation {
+    position: relative;
+    padding-left: 34px;
+    margin: -4px 0 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--brass-deep);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.tl-relocation::before {
+    content: '✈';
+    position: absolute;
+    left: 1px;
+    top: -2px;
+    width: 18px;
+    text-align: center;
+    background: var(--paper);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+@media (max-width: 600px) {
+    .journey {
+        padding: 12px;
+        gap: 8px;
+    }
+    .journey-city {
+        font-size: 13px;
+    }
+    .journey-route .plane {
+        display: none;
+    }
+}
+
+/* ── Report logic cards ── */
+.logic-card {
+    border: 1px solid var(--paper-line);
+    border-left: 3px solid var(--code-teal);
+    border-radius: 8px;
+    padding: 18px 22px;
+    background: #FDFCF8;
+    margin-bottom: 16px;
+}
+
+.logic-card.migration {
+    border-left-color: var(--brass);
+    background: #F8F6F0;
+}
+
+.logic-card .project-card-desc {
+    margin-bottom: 10px;
+}
+
+.logic-card details {
+    margin-top: 6px;
+}
+
+.logic-card summary {
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--code-teal);
+    list-style: none;
+}
+
+.logic-card summary::-webkit-details-marker { display: none; }
+.logic-card summary::before { content: '+ '; }
+.logic-card details[open] summary::before { content: '− '; }
+
+.logic-steps {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+    margin: 12px 0 0;
+}
+
+.logic-steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 9px;
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.6;
+}
+
+.logic-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--code-teal);
+    color: var(--code-teal);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    line-height: 18px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.logic-steps li strong {
+    color: var(--ink);
+}
+
+.logic-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+}
+
+.logic-flow span {
+    border: 1px solid var(--paper-line);
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 3px 8px;
+    color: var(--ink);
+}
+
+.logic-flow i {
+    font-style: normal;
+    color: var(--brass);
+}
+
+.logic-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0 4px;
+}
+
+.logic-stat {
+    flex: 1 1 120px;
+    border: 1px solid var(--paper-line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: var(--paper);
+}
+
+.logic-stat b {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.logic-stat span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--slate);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 /* ── Projects Section ── */
 .projects-section {
     margin-top: 40px;
@@ -840,7 +1289,44 @@
         color: var(--slate) !important;
     }
 }
-    </style>
+    
+/* ═══ WIDE LAYOUT ═══ */
+@media screen and (min-width: 1200px) {
+    .container { max-width: 1880px; }
+    .left-sidebar {
+        width: 23%;
+        max-width: 420px;
+        padding: 48px 32px;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        height: 100vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+    }
+    .profile-photo { width: 180px; height: 180px; }
+    .right-content { width: auto; flex: 1; padding: 48px 56px; }
+    .profile-text { max-width: 1100px; }
+
+
+
+    .projects-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 24px;
+        align-items: start;
+    }
+    .projects-section > .skills-title,
+    .projects-section > .reports-block,
+    .projects-section > .migration { grid-column: 1 / -1; }
+    .reports-list { column-count: 2; column-gap: 40px; }
+    .reports-list li { break-inside: avoid; }
+    .migration .logic-steps { column-count: 2; column-gap: 32px; }
+    .migration .logic-steps li { break-inside: avoid; }
+    .logic-card { margin-bottom: 24px; }
+    .projects-section > .project-card { grid-column: 1 / -1; }
+}
+</style>
 </head>
 <body>
     <div class="header-accent"></div>
@@ -862,7 +1348,15 @@ alt="Beka Razmadze - Profile Photo">
                 <div class="section-title">Contact</div>
                 <div class="contact-item">
                     <div class="contact-icon">📞</div>
-                    <div class="contact-text"><a href="tel:+995555128711">+995 (555 12 87 11)</a></div>
+                    <div class="contact-text"><a href="tel:+998507306528">+998 50 730 65 28</a><span class="contact-note">Uzbekistan · active number</span></div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-text"><a href="tel:+995555128711">+995 555 12 87 11</a><span class="contact-note">Georgia · linked to Telegram</span></div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✈️</div>
+                    <div class="contact-text"><a href="https://t.me/MYZZIIXOSYVJ" target="_blank">@MYZZIIXOSYVJ</a><span class="contact-note">Telegram</span></div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">✉️</div>
@@ -879,6 +1373,16 @@ alt="Beka Razmadze - Profile Photo">
                 <div class="contact-item">
                     <div class="contact-icon">💻</div>
                     <div class="contact-text"><a href="https://beqa-pixel.github.io/" target="_blank">https://beqa-pixel.github.io/ (Interactive CV)</a></div>
+                </div>
+                <div class="qr-row">
+                    <a class="qr-card" href="https://t.me/MYZZIIXOSYVJ" target="_blank" title="Open Telegram">
+                        <img src="qr-telegram.jpg" alt="Telegram QR code for @MYZZIIXOSYVJ" loading="lazy">
+                        <span>Telegram</span>
+                    </a>
+                    <a class="qr-card" href="https://wa.me/qr/UOEJAZOSVKFLJ1" target="_blank" title="Open WhatsApp">
+                        <img src="qr-whatsapp.jpg" alt="WhatsApp QR code" loading="lazy">
+                        <span>WhatsApp</span>
+                    </a>
                 </div>
                 <a href="Beka Razmadze - CV.pdf" download class="diploma-button" style="display:inline-block; text-decoration:none;">⬇ Download CV (PDF)</a>
             </div>
@@ -916,7 +1420,7 @@ alt="Beka Razmadze - Profile Photo">
 
             <!-- Profile Section -->
             <div class="profile-text">
-                Collections Reporting Team Lead at TBC Bank Uzbekistan, based in Tashkent. Started as a Risk Data Analyst, moved into owning C-level executive management reporting end-to-end, and now leads the collections reporting function — building the internal tools, setting the reporting standards, and mentoring the team. Strong technical foundation in SQL, Python, and Power BI paired with hands-on reporting leadership experience.
+                Data Analytics &amp; Collections Reporting Team Lead at TBC Bank Uzbekistan (Space International), based in Tashkent. Started as a Risk Data Analyst, moved into owning C-level executive management reporting end-to-end, and now leading the collections reporting function — building ETL data pipelines, automated reporting and Power BI dashboards, setting KPI and data-quality standards, and mentoring the team. Hands-on with SQL (T-SQL, SQL Server, StarRocks), Python (pandas), Power BI (DAX, Power Query) and Excel, with a background in econometrics and credit-risk, cohort and portfolio analysis in banking and fintech.
             </div>
 
             <!-- Work Experience -->
@@ -926,16 +1430,51 @@ alt="Beka Razmadze - Profile Photo">
                     <div class="work-item work-item-with-image">
                         <div class="work-item-content">
                             <div class="company-name">Space International — the Fintech Behind TBC Uzbekistan</div>
-                            <div class="job-position">Collection Reporting Team Lead</div>
                             <div class="job-dates">JANUARY 2024 — PRESENT</div>
-                            <div class="job-description">
-                                <ul>
-                                    <li><strong>Collection Reporting Team Lead</strong> — <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass-deep); letter-spacing:0.5px;">JULY 2025 – PRESENT</span><br>Relocated to Tashkent, Uzbekistan to lead the collections reporting function for TBC Uzbekistan. Designed and built <a href="control-center.html">Control Center</a>, and leads and mentors the reporting team.</li>
-                                    <li><strong>C-Level Executive Management Reporting Data Analyst</strong> — <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass-deep); letter-spacing:0.5px;">JULY 2024 – MAY 2026</span><br>Owned end-to-end delivery of executive management reporting — defined what got reported, to whom, and on what schedule. Designed and built an <a href="skills-python.html">automated daily management reporting tool</a>, and introduced a live Slack status dashboard for report delivery health.</li>
-                                    <li><strong>Early Warning System (EWS)</strong> — <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass-deep); letter-spacing:0.5px;">COMPLETED DECEMBER 2025</span><br>Partnered with <strong>Nicole Gilberg</strong>, credit-risk consultant, and Adastra to design and build 18 automated fraud and credit-risk detection rules running against the loan portfolio, with weekly Slack alerts and automatic Jira ticketing for triggered rules.</li>
-                                    <li><strong>Risk Data Analyst</strong> — <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass-deep); letter-spacing:0.5px;">JANUARY 2024 – JUNE 2024</span><br>Optimized complex SQL queries, automated daily SSRS reports, and built Power BI dashboards for key risk metrics.</li>
-                                </ul>
-                            </div>
+
+                            <ol class="timeline">
+                                <li class="tl-item current">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-head">
+                                        <span class="tl-role">Collection Reporting Team Lead</span>
+                                        <span class="tl-date">JUL 2025 – PRESENT</span>
+                                        <span class="tl-place">📍 Tashkent, Uzbekistan</span>
+                                    </div>
+                                    <div class="tl-body">Relocated to Tashkent to lead the collections reporting function for TBC Uzbekistan. Designed and built <a href="control-center.html">Control Center</a>; leading the <a href="#starrocks-migration">migration of the reporting stack from SQL Server to StarRocks</a>, owning the <a href="#collection-vintage">Collection Vintage</a> and <a href="#portfolio-report">Portfolio</a> reports, and leading and mentoring the reporting team.</div>
+                                </li>
+
+                                <li class="tl-relocation">Relocation · Tbilisi → Tashkent · Jul 2025</li>
+
+                                <li class="tl-item">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-head">
+                                        <span class="tl-role">C-Level Executive Management Reporting Data Analyst</span>
+                                        <span class="tl-date">JUL 2024 – JUN 2025</span>
+                                        <span class="tl-place">📍 Tbilisi, Georgia</span>
+                                    </div>
+                                    <div class="tl-body">Owned end-to-end delivery of executive management reporting — defined what got reported, to whom, and on what schedule. Designed and built an <a href="skills-python.html">automated daily management reporting tool</a>, and introduced a live Slack status dashboard for report delivery health and data-quality monitoring.</div>
+                                </li>
+
+                                <li class="tl-item milestone">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-head">
+                                        <span class="tl-role">Early Warning System (EWS)</span>
+                                        <span class="tl-date">COMPLETED DEC 2025</span>
+                                        <span class="tl-place">📍 Tbilisi, Georgia · Remote</span>
+                                    </div>
+                                    <div class="tl-body">Partnered with <strong>Nicole Gilberg</strong>, credit-risk consultant, and Adastra to design and build 18 automated fraud and credit-risk detection rules running against the loan portfolio, with weekly Slack alerts and automatic Jira ticketing for triggered rules.</div>
+                                </li>
+
+                                <li class="tl-item">
+                                    <span class="tl-node"></span>
+                                    <div class="tl-head">
+                                        <span class="tl-role">Risk Data Analyst</span>
+                                        <span class="tl-date">JAN 2024 – JUN 2024</span>
+                                        <span class="tl-place">📍 Tbilisi, Georgia</span>
+                                    </div>
+                                    <div class="tl-body">Optimized complex SQL queries (query optimization, indexing), automated daily SSRS reports, and built Power BI dashboards for key credit-risk metrics and KPIs.</div>
+                                </li>
+                            </ol>
                         </div>
                         <div class="work-item-image">
                             <img src="data:image/png;base64,
@@ -951,7 +1490,7 @@ iVBORw0KGgoAAAANSUhEUgAAAQgAAABNCAYAAABaFPqUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
                 <div class="work-item">
                     <div class="company-name">Girteka (GBC Georgia)</div>
                     <div class="job-position">Internship, SAP ABAP Developer</div>
-                    <div class="job-dates">AUGUST 2023 — DECEMBER 2023</div>
+                    <div class="job-dates">AUGUST 2023 — DECEMBER 2023 <span class="tl-place">📍 Tbilisi, Georgia</span></div>
                     <div class="job-description">
                         <ul>
                             <li>Developed an SAP Fiori application that enabled customers to access the company's services with a single sign-on</li>
@@ -962,7 +1501,7 @@ iVBORw0KGgoAAAANSUhEUgAAAQgAAABNCAYAAABaFPqUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
                 <div class="work-item">
                     <div class="company-name">Persati Logistics</div>
                     <div class="job-position">Financialist</div>
-                    <div class="job-dates">FEBRUARY 2022 — JULY 2023</div>
+                    <div class="job-dates">FEBRUARY 2022 — JULY 2023 <span class="tl-place">📍 Tbilisi, Georgia</span></div>
                     <div class="job-description">
                         <ul>
                             <li>Developed and maintained accurate financial records and documents</li>
@@ -981,17 +1520,15 @@ iVBORw0KGgoAAAANSUhEUgAAAQgAAABNCAYAAABaFPqUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
                     <a href="skills-sql.html" class="skill-button">SQL</a>
                     <a href="skills-python.html" class="skill-button">Python</a>
                     <a href="skills-dataviz.html" class="skill-button">Data Visualization (Power BI)</a>
-                    <button class="skill-button">Power BI</button>
-                    <button class="skill-button">Risk Analysis</button>
-                    <button class="skill-button">Financial Analysis</button>
-                    <button class="skill-button">Dashboard Development</button>
-                    <button class="skill-button">SSRS</button>
-                    <button class="skill-button">Financial Controls</button>
-                    <button class="skill-button">Fraud Detection</button>
-                    <button class="skill-button">SAP ABAP</button>
-                    <button class="skill-button">System Monitoring</button>
-                    <button class="skill-button">Data Analytics</button>
-                    <button class="skill-button">Team Collaboration</button>
+                    <a href="skills-risk.html" class="skill-button">Risk Analysis</a>
+                </div>
+                <div class="skill-groups">
+                    <div class="skill-group"><span class="skill-group-label">Languages &amp; Databases</span><span class="skill-chip">SQL</span><span class="skill-chip">T-SQL</span><span class="skill-chip">SQL Server</span><span class="skill-chip">StarRocks</span><span class="skill-chip">Python</span><span class="skill-chip">pandas</span><span class="skill-chip">matplotlib</span><span class="skill-chip">SAP ABAP</span></div>
+                    <div class="skill-group"><span class="skill-group-label">BI &amp; Reporting</span><span class="skill-chip">Power BI</span><span class="skill-chip">DAX</span><span class="skill-chip">Power Query</span><span class="skill-chip">Excel</span><span class="skill-chip">SSRS</span><span class="skill-chip">Dashboard Development</span><span class="skill-chip">KPI Reporting</span><span class="skill-chip">Executive Reporting</span><span class="skill-chip">Data Visualization</span></div>
+                    <div class="skill-group"><span class="skill-group-label">Data Engineering</span><span class="skill-chip">ETL / Data Pipelines</span><span class="skill-chip">Data Modeling</span><span class="skill-chip">Data Warehousing</span><span class="skill-chip">Data Lakehouse</span><span class="skill-chip">Data Migration</span><span class="skill-chip">Stored Procedures</span><span class="skill-chip">Query Optimization</span><span class="skill-chip">Report Automation</span><span class="skill-chip">Job Scheduling &amp; Monitoring</span></div>
+                    <div class="skill-group"><span class="skill-group-label">Analytics</span><span class="skill-chip">Data Analysis</span><span class="skill-chip">Statistical Analysis</span><span class="skill-chip">Econometrics</span><span class="skill-chip">Cohort / Vintage Analysis</span><span class="skill-chip">Roll-Rate Analysis</span><span class="skill-chip">Root Cause Analysis</span><span class="skill-chip">Ad-hoc Analysis</span><span class="skill-chip">Data Quality &amp; Validation</span><span class="skill-chip">Data Reconciliation</span></div>
+                    <div class="skill-group"><span class="skill-group-label">Domain</span><span class="skill-chip">Credit Risk</span><span class="skill-chip">Collections Analytics</span><span class="skill-chip">Fraud Detection</span><span class="skill-chip">Portfolio Risk</span><span class="skill-chip">Banking &amp; Fintech</span><span class="skill-chip">Financial Analysis</span><span class="skill-chip">Financial Controls</span></div>
+                    <div class="skill-group"><span class="skill-group-label">Ways of Working</span><span class="skill-chip">Team Leadership</span><span class="skill-chip">Mentoring</span><span class="skill-chip">Stakeholder Management</span><span class="skill-chip">Cross-functional Collaboration</span><span class="skill-chip">Requirements Gathering</span><span class="skill-chip">Technical Documentation</span><span class="skill-chip">Git</span><span class="skill-chip">Jira</span><span class="skill-chip">Slack Automation</span></div>
                 </div>
             </div>
 
@@ -1003,12 +1540,86 @@ iVBORw0KGgoAAAANSUhEUgAAAQgAAABNCAYAAABaFPqUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
                     <div class="reports-label">Reporting &amp; Analytics Delivered</div>
                     <ul class="reports-list">
                         <li><strong>Auto Collection Share Pipeline</strong> — attributes every loan repayment to its collection channel (direct payment, auto-debit, litigation, etc.) across a SQL Server → StarRocks pipeline feeding a live Power BI dashboard and Slack bots.</li>
-                        <li><strong>Portfolio Risk Report</strong> — diagnosed and rebuilt a live reporting pipeline after a data-accuracy incident, restoring trust in a bank-wide risk portfolio dashboard.</li>
-                        <li><strong>Collection Vintage Report</strong> — cohort-based loan recovery analysis across multiple loan products, tracking collection efficiency over time.</li>
                         <li><strong>Collections Bonus Calculation</strong> — audited and documented the multi-layer SQL → Power BI pipeline that computes monthly agent bonus payouts, uncovering real calculation bugs.</li>
                         <li><strong>External Agency Recovery Reporting</strong> — built the registry and recurring reporting pipeline tracking loans handed to third-party debt-collection agencies.</li>
                         <li><strong>Early Warning System (EWS)</strong> — partnered with credit-risk consultant Nicole Gilberg and Adastra to build 18 automated fraud and credit-risk detection rules against the loan portfolio, with weekly Slack alerts and automatic Jira ticketing.</li>
                     </ul>
+                </div>
+
+                <div class="logic-card migration" id="starrocks-migration">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Reporting Migration to StarRocks</div>
+                        <div class="project-card-tag">Data Platform · 2026</div>
+                    </div>
+                    <div class="project-card-desc">
+                        Leading the move of the whole collections reporting stack off legacy SQL Server stored procedures and onto the bank's StarRocks lakehouse. Each report is rebuilt as a StarRocks SQL job, scheduled and health-checked in <a href="control-center.html" style="color:var(--code-teal); font-weight:600;">Control Center</a>, proven equal to the old output, and only then is its Power BI dashboard switched over.
+                    </div>
+                    <div class="logic-stats">
+                        <div class="logic-stat"><b>20+</b><span>Reports &amp; data marts moved</span></div>
+                        <div class="logic-stat"><b>29.5K → 1.1K</b><span>Lines in one rewritten report script</span></div>
+                        <div class="logic-stat"><b>12h → 15 min</b><span>Full-history rebuild of one report</span></div>
+                    </div>
+                    <details>
+                        <summary>How the migration works</summary>
+                        <div class="logic-flow">
+                            <span>Legacy stored proc</span><i>→</i><span>StarRocks SQL job</span><i>→</i><span>Validate vs old output</span><i>→</i><span>Repoint Power BI</span><i>→</i><span>Retire old job</span>
+                        </div>
+                        <ol class="logic-steps">
+                            <li><strong>Data marts first.</strong> Shared building blocks (call history, CRM contact history, payments, a common product-mapping standard) are migrated before the reports that read them, so every report uses the same definitions.</li>
+                            <li><strong>Rewrite, don't copy.</strong> Procedures that ran day by day in loops are rewritten as single set-based passes. One report went from ~29.5K lines to ~1.1K and rebuilds its full history in about 15 minutes.</li>
+                            <li><strong>Prove it matches.</strong> Every new table is compared with the legacy output: row counts, totals per month and product, then loan-level checks for any gap. Differences are either fixed or written down as known, explained source differences.</li>
+                            <li><strong>Gate the refresh.</strong> Power BI refreshes only after Control Center confirms that all upstream source tables are fresh, so dashboards never refresh on stale data.</li>
+                            <li><strong>Single source of truth.</strong> A migration status board, trusted-tables registry and contradictions log keep the team aligned on what is live and what is pending.</li>
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="logic-card" id="collection-vintage">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Collection Vintage Report</div>
+                        <div class="project-card-tag">Cohort Analytics · Power BI</div>
+                    </div>
+                    <div class="project-card-desc">
+                        Answers one question for management: <em>"Of the loans that fell into a delinquency bucket in a given month, how much did we recover — and how fast?"</em> Covers every loan product, with separate views for recovery, litigation and court outcomes.
+                    </div>
+                    <details>
+                        <summary>Report logic</summary>
+                        <div class="logic-flow">
+                            <span>Daily DPD snapshot</span><i>→</i><span>Cohort by entry month</span><i>→</i><span>Track month 1…24</span><i>→</i><span>Recovery % matrix</span>
+                        </div>
+                        <ol class="logic-steps">
+                            <li><strong>Build cohorts (vintages).</strong> Every loan is assigned to the month it first entered a DPD bucket (1+, 31+, 61+, 91+ days past due). The balance at entry is the denominator.</li>
+                            <li><strong>Follow each cohort month by month.</strong> For up to 24 months after entry, the report measures how much of the entry balance has left the bucket: cured back to 0 DPD, fully closed, or paid down.</li>
+                            <li><strong>Two ways to count recovery.</strong> <em>Balance exit</em> counts a cured loan at its full balance. <em>Cash recovery</em> counts only the principal actually paid, capped at the entry balance. A loan that defaults again stays in its first cohort, so payments are never counted twice.</li>
+                            <li><strong>Recovery type breakdown.</strong> Recovery is split into cure, closure, paydown and payment after cure, so a high rate driven by cures is not mistaken for cash collected.</li>
+                            <li><strong>Litigation &amp; court vintage.</strong> Litigated loans are cohorted by litigation month and tracked through court stages and closure.</li>
+                            <li><strong>Slice everything.</strong> Product, product group, legal entity, client segment and fraud type filters all work on the same matrix.</li>
+                        </ol>
+                        <div class="project-card-desc" style="margin-top:8px;">Rewrote the full report on StarRocks, and found and fixed real logic bugs during the audit: product splits silently collapsing, month-end cohort shifts, and a one-off mass loan-forgiveness event distorting recovery rates.</div>
+                    </details>
+                </div>
+
+                <div class="logic-card" id="portfolio-report">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Portfolio Report</div>
+                        <div class="project-card-tag">Portfolio Risk · Power BI</div>
+                    </div>
+                    <div class="project-card-desc">
+                        A monthly picture of the whole loan portfolio together with what the collections team did on it: how many loans are overdue, how deep, and how many were contacted, promised to pay, paid, or went to litigation.
+                    </div>
+                    <details>
+                        <summary>Report logic</summary>
+                        <div class="logic-flow">
+                            <span>Month-end portfolio snapshot</span><i>→</i><span>+ Collection actions</span><i>→</i><span>Aggregate by segment</span><i>→</i><span>Dashboard</span>
+                        </div>
+                        <ol class="logic-steps">
+                            <li><strong>Snapshot the portfolio.</strong> Each month, every active loan is captured with its product, DPD bucket, score segment, fraud type, region, write-off and litigation status, and current collection stage.</li>
+                            <li><strong>Layer collection activity on top.</strong> For each loan the report adds contact results (right-party / third-party contact), promises to pay, payments, letters sent, and enforcement-bureau and litigation flags.</li>
+                            <li><strong>Aggregate for speed.</strong> Loans sharing the same attributes are grouped into one row with a loan count and summed overdue days, so averages like mean DPD are computed correctly as total overdue days ÷ loans.</li>
+                            <li><strong>Track movement.</strong> New loans, cures and rolls between buckets are flagged by comparing consecutive snapshots.</li>
+                        </ol>
+                        <div class="project-card-desc" style="margin-top:8px;">Diagnosed and fixed real data-accuracy bugs (loans falsely tagged as "new", a litigation flag that didn't persist) and rebuilt the report on StarRocks as a single full-history pass that was proven equal to the old output.</div>
+                    </details>
                 </div>
 
                 <div class="project-card">
